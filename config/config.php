@@ -56,45 +56,78 @@ $config["BBCode.tags"] = array (
   array (
     'type' => '0',
     'complex' => false,
-    'start' => '<b>',
-    'end' => '</b>',
+    'simple_start' => '<b>',
+    'simple_end' => '</b>',
   ),
   'i' => 
   array (
     'type' => 0,
     'complex' => false,
-    'start' => '<i>',
-    'end' => '</i>',
+    'simple_start' => '<i>',
+    'simple_end' => '</i>',
   ),
   'u' => 
   array (
     'type' => 0,
     'complex' => false,
-    'start' => '<span style=\'text-decoration: underline\'>',
-    'end' => '</span>',
+    'simple_start' => '<span style=\'text-decoration: underline\'>',
+    'simple_end' => '</span>',
   ),
   's' => 
   array (
     'type' => 0,
     'complex' => false,
-    'start' => '<span style=\'text-decoration: line-through\'>',
-    'end' => '</span>',
+    'simple_start' => '<span style=\'text-decoration: line-through\'>',
+    'simple_end' => '</span>',
   ),
   'sup' => 
   array (
     'type' => 0,
     'complex' => false,
-    'start' => '<sup>',
-    'end' => '</sup>',
+    'simple_start' => '<sup>',
+    'simple_end' => '</sup>',
   ),
   'sub' => 
   array (
     'type' => 0,
     'complex' => false,
-    'start' => '<sub>',
-    'end' => '</sub>',
+    'simple_start' => '<sub>',
+    'simple_end' => '</sub>',
+  ),
+  'size' => 
+  array (
+    'type' => 1,
+    'complex' => false,
+    'template' => '<span style="font-size: {$_default}pt">{$_content}</span>',
+    'allow' => 
+    array (
+      '_default' => '/^[1-8]?[0-9]*$/',
+    ),
+    'mode' => 4,
+  ),
+  'color' => 
+  array (
+    'type' => 1,
+    'complex' => false,
+    'template' => '<span style="color: {$_default}">{$_content}</span>',
+    'allow' => 
+    array (
+      '_default' => '/(#?([a-f0-9]{3}){1,2})|white|silver|gray|black|red|maroon|yellow|olive|lime|green|aqua|teal|blue|navy|fuchsia|purple/i',
+    ),
+    'mode' => 4,
+  ),
+  'font' => 
+  array (
+    'type' => 1,
+    'complex' => false,
+    'template' => '<span style="font-family: {$_default};" class="bbc_font">{$_content}</span>',
+    'allow' => 
+    array (
+      '_default' => '/[a-z0-9_,\\-\\s]+?/i',
+    ),
+    'mode' => 4,
   ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Sat, 05 Jan 2013 18:33:06 +0100
+// Last updated by: Gab (127.0.0.1) @ Sat, 05 Jan 2013 20:21:47 +0100
 ?>
