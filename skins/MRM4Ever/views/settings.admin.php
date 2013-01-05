@@ -64,7 +64,7 @@ $form = $data["skinSettingsForm"];
 		?>
 	</ul>
 	<ul>
-	<a href="javascript:void(0)" id="AddMenuField">[Adicionar Campo]</a>
+		<a href="javascript:void(0)" id="AddMenuField">[Adicionar Campo]</a>
 	</ul>
 </li>
 
@@ -165,9 +165,16 @@ $(function() {
 		}
 	}).change();
 
+	function removeElem(e) {
+		var elem   = e.target.parentNode.parentNode
+		elem.parentNode.removeChild(elem);
+	}
+
 	$("#AddMenuField").click(function() {
 		var menuLabel = $("<?php echo $form->input("menuLabel[]", "text", array("class" => "menuLabel")); ?>");
 		var menuURL   = $("<?php echo $form->input("menuURL[]",   "text", array("class" => "menuURL"  )); ?>");
+		
+		link = $("<a href='javascript:void(0)' class='RemoveMenuField'>[Remover]</a>");
 		
 		$("#menuFields").append(
 			$("<li>").append(
@@ -179,14 +186,15 @@ $(function() {
 			).append(
 				menuURL
 			).append(
-				$("<label class='inline'>&nbsp<a href='javascript:void(0)' class='RemoveMenuField'>[Remover]</a></label>")
+				$("<label class='inline'>&nbsp</label>").append(
+					link
+				)
 			)
 		);
+		
+		link.click(removeElem);
 	});
 	
-	$(".RemoveMenuField").click(function(e) {
-		var elem   = e.target.parentNode
-		elem.parentNode.removeChild(elem);
-	});
+	$(".RemoveMenuField").click(removeElem);
 });
 </script>
