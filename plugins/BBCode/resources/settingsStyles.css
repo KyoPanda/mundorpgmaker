@@ -1,0 +1,18 @@
+.form > label {
+	font-weight: bold;
+	margin-left: 8px;
+}
+
+.form .inputBox {
+	left: 25%;
+	position: absolute;
+}
+
+#bbcSetNavigation {
+	padding-left: 40px;
+}
+
+fieldset {
+	margin: 10px 20px 0 !important;
+	display: none;
+}
