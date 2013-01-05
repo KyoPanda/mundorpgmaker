@@ -51,6 +51,50 @@ $config["skin.MRM4Ever.menuURL"] = array (
   5 => '/esotalk/conversations/scripts',
   6 => '/esotalk/members',
 );
+$config["BBCode.tags"] = array (
+  'b' => 
+  array (
+    'type' => '0',
+    'complex' => false,
+    'start' => '<b>',
+    'end' => '</b>',
+  ),
+  'i' => 
+  array (
+    'type' => 0,
+    'complex' => false,
+    'start' => '<i>',
+    'end' => '</i>',
+  ),
+  'u' => 
+  array (
+    'type' => 0,
+    'complex' => false,
+    'start' => '<span style=\'text-decoration: underline\'>',
+    'end' => '</span>',
+  ),
+  's' => 
+  array (
+    'type' => 0,
+    'complex' => false,
+    'start' => '<span style=\'text-decoration: line-through\'>',
+    'end' => '</span>',
+  ),
+  'sup' => 
+  array (
+    'type' => 0,
+    'complex' => false,
+    'start' => '<sup>',
+    'end' => '</sup>',
+  ),
+  'sub' => 
+  array (
+    'type' => 0,
+    'complex' => false,
+    'start' => '<sub>',
+    'end' => '</sub>',
+  ),
+);
 
-// Last updated by: Gab (127.0.0.1) @ Fri, 04 Jan 2013 23:36:54 +0100
+// Last updated by: Gab (127.0.0.1) @ Sat, 05 Jan 2013 18:33:06 +0100
 ?>
