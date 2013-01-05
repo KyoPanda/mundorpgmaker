@@ -132,10 +132,7 @@ $config["BBCode.tags"] = array (
     'type' => 2,
     'complex' => false,
     'mode' => 1,
-    'methodArgs' => 
-    array (
-      0 => '$bbcode, $action, $name, $default, $params, $content',
-      1 => 'if ($action == BBCODE_CHECK) {
+    'methodBody' => 'if ($action == BBCODE_CHECK) {
 return true;
 		}
 		
@@ -166,7 +163,6 @@ return true;
 		
 		// Return
 		return "<img " . $args . " />";',
-    ),
   ),
 );
 

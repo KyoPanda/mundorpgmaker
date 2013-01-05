@@ -99,13 +99,15 @@ public function handler_format_format($sender)
 	foreach($bbcodeList as $name => $tag){
 		if ($sender->basic && $tag['complex'])
 			continue;
+			
 		if ($tag['type'] == 2){
 			$tag['method'] = create_function(
-				$tag['methodArgs'][0],
-				$tag['methodArgs'][1]
+				'$bbcode, $action, $name, $default, $params, $content',
+				$tag['methodBody']
 			);
 		}
-			$bbcode->addRule($name, $tag);
+		
+		$bbcode->addRule($name, $tag);
 	}
 	// Registra modificações
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
@@ -171,10 +173,7 @@ public function settings($sender)
 				break;
 			case 2: // TAG C/ CALLBACK
 				$tag['mode'] = BBCODE_MODE_CALLBACK;
-				$tag['methodArgs'] = array(
-					'$bbcode, $action, $name, $default, $params, $content', 
-					$form->getValue('tagFunction')
-				);
+				$tag['methodBody'] = $form->getValue('tagFunction');
 				break;
 		}
 		
