@@ -46,16 +46,16 @@ $form = $data["pluginSettingsForm"];
 			<?php echo $form->input("tagType", "hidden", array('value' => 0)); ?>
 			<fieldset class='simple area' style="display: block">
 				<label>Nome da Tag</label>
-				<?php echo $form->input("tagName", "text"); ?>
+				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
 					
 				<label>Substituição Inicial</label>
-				<?php echo $form->input("tagStart", "text"); ?>
+				<?php echo $form->input("tagStart", "text", array('value' => '')); ?>
 					
 				<label>Substituição Final</label>
-				<?php echo $form->input("tagEnd", "text"); ?>
+				<?php echo $form->input("tagEnd", "text", array('value' => '')); ?>
 				
 				<label>Tag complexa?</label>
-				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
+				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text', 'value' => '')); ?>
 				
 				<li class='sep'></li>
 				<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
@@ -66,9 +66,9 @@ $form = $data["pluginSettingsForm"];
 			<?php echo $form->input("tagType", "hidden", array('value' => 1)); ?>
 			<fieldset class='enhanced area'>
 				<label>Nome da Tag</label>
-				<?php echo $form->input("tagName", "text"); ?>
+				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
 				<label>Template</label>
-				<?php echo $form->input("tagTemplate", "text"); ?>
+				<?php echo $form->input("tagTemplate", "text", array('value' => '')); ?>
 				<label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
 				<li class='sep'></li>
@@ -76,9 +76,9 @@ $form = $data["pluginSettingsForm"];
 				<ol id="AttrList">
 					<li>
 						<label class='inline'>Nome</label>
-						<?php echo $form->input("tagAttrName[]", "text", array("class" => "smallText")); ?>
+						<?php echo $form->input("tagAttrName[]", "text", array("class" => "smallText", 'value' => '')); ?>
 						<label class='inline'>Validação</label>
-						<?php echo $form->input("tagAttrRgx[]", "text", array("class" => "smallText")); ?>
+						<?php echo $form->input("tagAttrRgx[]", "text", array("class" => "smallText", 'value' => '')); ?>
 						<label class='inline'><a href="javascript:void(0)" class="RemoveAttr">[Remover]</a></label>
 					</li>
 				</ol>
@@ -89,9 +89,17 @@ $form = $data["pluginSettingsForm"];
 		<?php echo $form->close(); ?>
 		<!-------------------------------------------->
 		<?php echo $form->open(); ?>
+			<?php echo $form->input("tagType", "hidden", array('value' => 2)); ?>
 			<fieldset class='callback area'>
 				<label>Nome da Tag</label>
 				<?php echo $form->input("tagName", "text"); ?>
+				<label>Tag complexa?</label>
+				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
+				<li class='sep'></li>
+				<label style='width:100%'>Função de validação</label>
+				<span class='desc'><strong>Argumentos:</strong> $bbcode, $action, $name, $default, $params, $content</span>
+				<?php echo $form->input("tagFunction", "textarea", array('id' => 'tagCode', 'value' => '')); ?>
+				<li class='sep'></li>
 				<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 			</fieldset>
 		<?php echo $form->close(); ?>

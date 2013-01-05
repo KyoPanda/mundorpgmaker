@@ -14,7 +14,7 @@ $config["esoTalk.urls.friendly"] = true;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1357339014;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1357425524;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -127,7 +127,48 @@ $config["BBCode.tags"] = array (
     ),
     'mode' => 4,
   ),
+  'img' => 
+  array (
+    'type' => 2,
+    'complex' => false,
+    'mode' => 1,
+    'methodArgs' => 
+    array (
+      0 => '$bbcode, $action, $name, $default, $params, $content',
+      1 => 'if ($action == BBCODE_CHECK) {
+return true;
+		}
+		
+		// Replace bad strings
+		$badSearch = array(\'/javascript:/i\', \'/about:/i\', \'/vbscript:/i\');
+		$badReplace = array(\'javascript<b></b>:\', \'about<b></b>:\', \'vbscript<b></b>:\');
+		$content = preg_replace($badSearch, $badReplace, $content);
+		
+		
+		// Parse args
+		$args = \'src="\' . $content . \'"\';
+		
+		foreach ($params as $key => $value){
+			switch(strtolower($key)){
+			case \'height\':
+			case \'width\':
+				if (preg_match("/^(\\d)+$/", $value))
+					$args .= $key . \'=\' . $value . \'px \';
+			
+				break;
+			
+			case \'float\':
+				if (preg_match("/^(left|right)$/i", $value))
+					$args .= \'style="float: \' . $value . \';"\';
+				break;
+			}
+		}
+		
+		// Return
+		return "<img " . $args . " />";',
+    ),
+  ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Sat, 05 Jan 2013 20:21:47 +0100
+// Last updated by: Gab (127.0.0.1) @ Sun, 06 Jan 2013 00:08:57 +0100
 ?>

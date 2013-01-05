@@ -44,3 +44,16 @@ fieldset > li.sep {
 .inline {
 	display: inline;
 }
+
+textarea {
+	width: 80% !important;
+	height: 10em;
+	resize: vertical;
+	font-size: 12px;
+	font-family: monospace;
+}
+
+span.desc {
+	font-size: 11px;
+	font-family: monospace;
+}

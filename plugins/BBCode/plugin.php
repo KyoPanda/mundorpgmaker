@@ -99,15 +99,14 @@ public function handler_format_format($sender)
 	foreach($bbcodeList as $name => $tag){
 		if ($sender->basic && $tag['complex'])
 			continue;
-		
-		switch($tag['type']){
-		case 0: // SIMPLES
-			$bbcode->addRule($name, $tag);
-		case 1: // APRIMORADA
-			$bbcode->addRule($name, $tag);
+		if ($tag['type'] == 2){
+			$tag['method'] = create_function(
+				$tag['methodArgs'][0],
+				$tag['methodArgs'][1]
+			);
 		}
+			$bbcode->addRule($name, $tag);
 	}
-	
 	// Registra modificações
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
@@ -146,7 +145,7 @@ public function settings($sender)
 		
 		$tag  = array(
 			'type'    => $type,
-			'complex' => (bool)$form->getValue("tagComplex$type")
+			'complex' => (bool)$form->getValue("tagComplex")
 		);
 		
 		switch ($type){
@@ -171,6 +170,11 @@ public function settings($sender)
 				
 				break;
 			case 2: // TAG C/ CALLBACK
+				$tag['mode'] = BBCODE_MODE_CALLBACK;
+				$tag['methodArgs'] = array(
+					'$bbcode, $action, $name, $default, $params, $content', 
+					$form->getValue('tagFunction')
+				);
 				break;
 		}
 		
@@ -187,7 +191,7 @@ public function settings($sender)
 	$bbcodes = C("BBCode.tags");
 	$sender->data("bbcodes", $bbcodes ? $bbcodes : array());
 	$sender->addCSSFile($this->getResource("settingsStyles.css"));
-	
+		
 	// Renderiza view
 	return $this->getView('settings');
 }
