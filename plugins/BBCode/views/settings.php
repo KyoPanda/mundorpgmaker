@@ -57,17 +57,17 @@ $form = $data["pluginSettingsForm"];
 				</div>
 			</div>
 			
-			<?php echo $form->button("createBBC", T("Create BBC"), array("class" => "big submit")); ?>
+			<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 		</fieldset>
 		<fieldset class='enhanced area'>
 			<label>Nome da Tag</label>
 			<?php echo $form->input("tagName", "text"); ?>
-			<?php echo $form->button("createBBC", T("Create BBC"), array("class" => "big submit")); ?>
+			<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 		</fieldset>
 		<fieldset class='callback area'>
 			<label>Nome da Tag</label>
 			<?php echo $form->input("tagName", "text"); ?>
-			<?php echo $form->button("createBBC", T("Create BBC"), array("class" => "big submit")); ?>
+			<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 		</fieldset>
 		
 		<li class='sep' style='border-color: transparent'></li>
