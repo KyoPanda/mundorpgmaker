@@ -52,7 +52,6 @@ public function handler_conversationController_getEditControls($sender, &$contro
 	addToArrayString($controls, "image", "<a href='javascript:BBCode.image(\"$id\");void(0)' title='".T("Image")."' class='bbcode-img'><span>".T("Image")."</span></a>", 0);
 	addToArrayString($controls, "link", "<a href='javascript:BBCode.link(\"$id\");void(0)' title='".T("Link")."' class='bbcode-link'><span>".T("Link")."</span></a>", 0);
 	addToArrayString($controls, "strike", "<a href='javascript:BBCode.strikethrough(\"$id\");void(0)' title='".T("Strike")."' class='bbcode-s'><span>".T("Strike")."</span></a>", 0);
-	addToArrayString($controls, "header", "<a href='javascript:BBCode.header(\"$id\");void(0)' title='".T("Header")."' class='bbcode-h'><span>".T("Header")."</span></a>", 0);
 	addToArrayString($controls, "italic", "<a href='javascript:BBCode.italic(\"$id\");void(0)' title='".T("Italic")."' class='bbcode-i'><span>".T("Italic")."</span></a>", 0);
 	addToArrayString($controls, "bold", "<a href='javascript:BBCode.bold(\"$id\");void(0)' title='".T("Bold")."' class='bbcode-b'><span>".T("Bold")."</span></a>", 0);
 }
@@ -90,54 +89,29 @@ public function handler_format_beforeFormat($sender)
  */
 public function handler_format_format($sender)
 {
-
+	
 	$bbcode = new BBCode;
 	
 	$bbcode->SetEnableSmileys(false);
 	
-	// TODO: Adicionar configuração no painel de administração
-	if (!$sender->basic){
-		// Tags complexas
+	$bbcodeList = C("BBCode.tags");
+	$bbcodeList = $bbcodeList ? $bbcodeList : array();
+	foreach($bbcodeList as $name => $tag){
+		if ($sender->basic && $tag['complex'])
+			continue;
+		
+		switch($tag['type']){
+		case 0: // SIMPLES
+			$bbcode->addRule($name, Array(
+				'simple_start' => $tag['start'],
+				'simple_end'   => $tag['end'  ]
+			));
+		}
 	}
 	
-	$bbcode->addRule('b', Array(
-		'simple_start' => "<b>",
-		'simple_end' => "</b>",
-		'class' => 'inline',
-		'allow_in' => Array('listitem', 'block', 'columns', 'inline', 'link'),
-		'plain_start' => "<b>",
-		'plain_end' => "</b>",
-	));
-	
 	// Registra modificações
-	$sender->content = $bbcode->Parse($sender->content);
-
-	return;
-	// TODO: Rewrite BBCode parser to use the method found here:
-	// http://stackoverflow.com/questions/1799454/is-there-a-solid-bb-code-parser-for-php-that-doesnt-have-any-dependancies/1799788#1799788
-	// Remove control characters from the post.
-	//$sender->content = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', $sender->content);
-	// \[ (i|b|color|url|somethingelse) \=? ([^]]+)? \] (?: ([^]]*) \[\/\1\] )
-
-	// Images: [img]url[/img]
-	if (!$sender->basic) $sender->content = preg_replace("/\[img\](.*?)\[\/img\]/i", "<img src='$1' alt='-image-'/>", $sender->content);
-
-	// Links with display text: [url=http://url]text[/url]
-	$sender->content = preg_replace("/\[url=(\w{2,6}:\/\/)?([^\]]*?)\](.*?)\[\/url\]/ie", "'<a href=\'' . ('$1' ? '$1' : 'http://') . '$2\' rel=\'nofollow external\' target=\'_blank\'>$3</a>'", $sender->content);
-
-	// Bold: [b]bold text[/b]
-	$sender->content = preg_replace("|\[b\](.*?)\[/b\]|si", "<b>$1</b>", $sender->content);
-
-	// Italics: [i]italic text[/i]
-	$sender->content = preg_replace("/\[i\](.*?)\[\/i\]/si", "<i>$1</i>", $sender->content);
-
-	// Strikethrough: [s]strikethrough[/s]
-	$sender->content = preg_replace("/\[s\](.*?)\[\/s\]/si", "<del>$1</del>", $sender->content);
-
-	// Headers: [h]header[/h]
-	$sender->content = preg_replace("/\[h\](.*?)\[\/h\]/", "</p><h4>$1</h4><p>", $sender->content);
+	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
-
 
 /**
  * Add an event handler to the formatter to put code blocks back in after formatting has taken place.
@@ -167,13 +141,39 @@ public function settings($sender)
 	$form->action = URL("admin/plugins/settings/BBCode");
 	
 	// Se o formulário foi enviado
-	if ($form->validPostBack("save")) {
+	if ($form->validPostBack("createBBC")) {
+		$name = $form->getValue("tagName");
+		$type = (int)$form->getValue('tagType');
 		
+		$tag  = array(
+			'type'    => $type,
+			'complex' => (bool)$form->getValue("tagComplex$type")
+		);
+		
+		switch ($type){
+			case 0: // TAG SIMPLES
+				$tag['start'] = $form->getValue('tagStart');
+				$tag['end']   = $form->getValue('tagEnd');
+				break;
+			case 1: // TAG APRIMORADA
+				$tag['template'] = $form->getValue('tagTemplate');
+				
+				break;
+			case 2: // TAG C/ CALLBACK
+				break;
+		}
+		
+		$definedTags = C('BBCode.tags');
+		if (!$definedTags) $definedTags = array();
+		
+		$definedTags[$name] = $tag;
+		$config = array('BBCode.tags' => $definedTags);
+		ET::writeConfig($config);
 	}
 	
 	// Determina informações necessárias para rederizar formulário
 	$sender->data("pluginSettingsForm", $form);
-	$bbcodes = C("plugin.BBCode.bbcodes");
+	$bbcodes = C("BBCode.tags");
 	$sender->data("bbcodes", $bbcodes ? $bbcodes : array());
 	$sender->addCSSFile($this->getResource("settingsStyles.css"));
 	

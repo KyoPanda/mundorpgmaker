@@ -12,7 +12,35 @@
 	padding-left: 40px;
 }
 
+#bbcForms {
+	overflow: hidden;
+}
+
 fieldset {
-	margin: 10px 20px 0 !important;
+	margin: 0 20px !important;
 	display: none;
+	padding-left: 150px;
+	overflow: hidden;
+}
+
+fieldset label {
+	line-height: 1.8em;
+	margin: 0 10px 1px 0;
+	width: 140px;
+	display: inline-block;
+}
+
+fieldset > li.sep {
+	list-style: none;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid white;
+	margin: 15px 0;
+}
+
+.smallText {
+	width: 100px !important;
+}
+
+.inline {
+	display: inline;
 }
