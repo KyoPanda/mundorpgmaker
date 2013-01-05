@@ -102,10 +102,9 @@ public function handler_format_format($sender)
 		
 		switch($tag['type']){
 		case 0: // SIMPLES
-			$bbcode->addRule($name, Array(
-				'simple_start' => $tag['start'],
-				'simple_end'   => $tag['end'  ]
-			));
+			$bbcode->addRule($name, $tag);
+		case 1: // APRIMORADA
+			$bbcode->addRule($name, $tag);
 		}
 	}
 	
@@ -152,11 +151,23 @@ public function settings($sender)
 		
 		switch ($type){
 			case 0: // TAG SIMPLES
-				$tag['start'] = $form->getValue('tagStart');
-				$tag['end']   = $form->getValue('tagEnd');
+				$tag['simple_start'] = $form->getValue('tagStart');
+				$tag['simple_end']   = $form->getValue('tagEnd');
 				break;
 			case 1: // TAG APRIMORADA
 				$tag['template'] = $form->getValue('tagTemplate');
+				$tag['allow']    = array();
+				$tag['mode']     = BBCODE_MODE_ENHANCED;
+				
+				$names = $form->getValue('tagAttrName');
+				$rgxps = $form->getValue('tagAttrRgx' );
+				foreach ($names as $id => $attrName){
+					$rgx = $rgxps[$id];
+					if (empty($attrName) or (@preg_match($rgx, '') === false))
+						continue;
+						
+					$tag['allow'][$attrName] = $rgx;
+				}
 				
 				break;
 			case 2: // TAG C/ CALLBACK

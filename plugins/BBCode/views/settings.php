@@ -63,12 +63,14 @@ $form = $data["pluginSettingsForm"];
 		<?php echo $form->close(); ?>
 		<!-------------------------------------------->
 		<?php echo $form->open(); ?>
-			<?php echo $form->input("tagType", "hidden", array('value' => 0)); ?>
+			<?php echo $form->input("tagType", "hidden", array('value' => 1)); ?>
 			<fieldset class='enhanced area'>
 				<label>Nome da Tag</label>
 				<?php echo $form->input("tagName", "text"); ?>
 				<label>Template</label>
 				<?php echo $form->input("tagTemplate", "text"); ?>
+				<label>Tag complexa?</label>
+				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
 				<li class='sep'></li>
 				<label>Atributos</label>
 				<ol id="AttrList">
