@@ -36,7 +36,6 @@ if (!defined("IN_ESOTALK")) exit;
 			<!-- HEADER -->
 			<div id='hdr'>
 				<div id='hdr-content'>
-
 					<ul id='userMenu' class='menu'>
 						<?php echo $data["userMenuItems"]; ?>
 						<!--

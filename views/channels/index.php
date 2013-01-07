@@ -14,9 +14,9 @@ if (!defined("IN_ESOTALK")) exit;
 <div id='conversationsFilter' class='bodyHeader'>
 
 <form class='search big' id='search' action='<?php echo URL("conversations/all"); ?>' method='get'>
-<fieldset>
-<input name='search' type='text' class='text' value='' spellcheck='false' placeholder='<?php echo T("Search conversations..."); ?>'/>
-</fieldset>
+	<fieldset>
+		<input name='search' type='text' class='text' value='' spellcheck='false' placeholder='<?php echo T("Search conversations..."); ?>'/>
+	</fieldset>
 </form>
 
 <ul id='channels' class='channels tabs'>
