@@ -269,7 +269,8 @@ public function index($conversationId = false, $year = false, $month = false)
 		));
 
 		// Quote a post: get the post details (id, name, content) and then set the value of the reply textarea appropriately.
-		if ($postId = (int)R("quote")) {
+                $postId = (int)R("quote");
+		if ($postId) {
 			$post = $this->getPostForQuoting($postId, $conversation["conversationId"]);
 			if ($post) $conversation["draft"] = "[quote=$postId:".$post["username"]."]".ET::formatter()->init($post["content"])->removeQuotes()->get()."[/quote]";
 		}
