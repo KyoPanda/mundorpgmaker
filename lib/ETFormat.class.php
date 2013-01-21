@@ -72,14 +72,14 @@ public function format()
 	// Format links and mentions.
 	$this->links();
 	if (C("esoTalk.format.mentions")) $this->mentions();
-	
+        
 	// Format bullet and numbered lists.
 	$this->lists();
 
 	// Trigger the "format" event, where all regular formatting can be applied (bold, italic, etc.)
 	$this->trigger("format");
 
-	// Format whitespace, adding in <br/> and <p> tags.
+        // Format whitespace, adding in <br/> and <p> tags.
 	$this->whitespace();
 
 	// Trigger the "after format" event, where code blocks can be put back in.
@@ -255,7 +255,7 @@ public function mentions()
 {
 	$this->content = preg_replace(
 		'/(^|[\s,\.:])@(\w{3,20})\b/ie',
-		"'$1<a href=\''.URL('member/name/'.urlencode('$2')).'\'>$2</a>'",
+		"'$1' . base64_encode('<a href=\"' . URL(\"member/name/\" . urlencode('$2')) . '\">$2</a>')",
 		$this->content
 	);
 
@@ -271,9 +271,10 @@ public function mentions()
  */
 public function getMentions($content)
 {
+        $matches = [];
 	preg_match_all('/(^|[\s,\.:])@(\w{3,20})\b/i', $content, $matches, PREG_SET_ORDER);
 	$names = array();
-	foreach ($matches as $k => $v) $names[] = $v[2];
+        foreach ($matches as $v) $names[] = $v[2];
 
 	return $names;
 }
