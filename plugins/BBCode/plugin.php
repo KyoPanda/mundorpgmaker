@@ -109,7 +109,7 @@ public function handler_format_format($sender)
 		//var_export(base64_decode($tag['methodBody']));
 		$bbcode->addRule($name, $tag);
 	}
-	// Registra modifica��es
+	// Registra modificações
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
 

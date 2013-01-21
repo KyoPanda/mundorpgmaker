@@ -106,3 +106,7 @@ input.menuLabel{width: 100px !important}
     right: 0px !important;
     left:inherit;
 }
+
+blockquote cite {
+    font-weight:normal !important;
+}
