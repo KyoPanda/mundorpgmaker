@@ -1,4 +1,4 @@
-<?php 
+<?php
 $config["esoTalk.installed"] = true;
 $config["esoTalk.version"] = '1.0.0g2';
 $config["esoTalk.database.host"] = 'localhost';
@@ -14,7 +14,7 @@ $config["esoTalk.urls.friendly"] = true;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1357577010;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1357943689;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -166,5 +166,5 @@ return true;
   ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Mon, 07 Jan 2013 17:43:30 +0100
+// Last updated by: Gab (127.0.0.1) @ Fri, 11 Jan 2013 23:35:30 +0100
 ?>
