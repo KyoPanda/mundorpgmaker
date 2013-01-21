@@ -360,7 +360,7 @@ public static function postActivity($item, $member)
 {
 	return array(
 		sprintf(T($item["start"] ? "%s started the conversation %s." : "%s posted in %s."), name($member["username"]), "<a href='".URL(postURL($item["postId"]))."'>".sanitizeHTML($item["title"])."</a>"),
-		ET::formatter()->init($item["content"])->basic(true)->removeQuotes()->format()->clip(250)->get()
+		ET::formatter()->init($item["content"])->basic(true)->format()->clip(250)->get()
 	);
 }
 
