@@ -103,13 +103,13 @@ public function handler_format_format($sender)
 		if ($tag['type'] == 2){
 			$tag['method'] = create_function(
 				'$bbcode, $action, $name, $default, $params, $content',
-				$tag['methodBody']
+				base64_decode($tag['methodBody'])
 			);
 		}
 		
 		$bbcode->addRule($name, $tag);
 	}
-	// Registra modificações
+	// Registra modificaï¿½ï¿½es
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
 
@@ -136,11 +136,11 @@ public function handler_format_afterFormat($sender)
  */
 public function settings($sender)
 {
-	// Inicia o formulário
+	// Inicia o formulï¿½rio
 	$form = ETFactory::make("form");
 	$form->action = URL("admin/plugins/settings/BBCode");
 	
-	// Se o formulário foi enviado
+	// Se o formulï¿½rio foi enviado
 	if ($form->validPostBack("createBBC")) {
 		$name = $form->getValue("tagName");
 		$type = (int)$form->getValue('tagType');
@@ -173,7 +173,7 @@ public function settings($sender)
 				break;
 			case 2: // TAG C/ CALLBACK
 				$tag['mode'] = BBCODE_MODE_CALLBACK;
-				$tag['methodBody'] = $form->getValue('tagFunction');
+				$tag['methodBody'] = base64_encode($form->getValue('tagFunction'));
 				break;
 		}
 		
@@ -185,7 +185,7 @@ public function settings($sender)
 		ET::writeConfig($config);
 	}
 	
-	// Determina informações necessárias para rederizar formulário
+	// Determina informaï¿½ï¿½es necessï¿½rias para rederizar formulï¿½rio
 	$sender->data("pluginSettingsForm", $form);
 	$bbcodes = C("BBCode.tags");
 	$sender->data("bbcodes", $bbcodes ? $bbcodes : array());
