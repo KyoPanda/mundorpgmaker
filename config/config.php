@@ -14,7 +14,7 @@ $config["esoTalk.urls.friendly"] = true;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1357943689;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1358799686;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -132,39 +132,16 @@ $config["BBCode.tags"] = array (
     'type' => 2,
     'complex' => false,
     'mode' => 1,
-    'methodBody' => 'if ($action == BBCODE_CHECK) {
-return true;
-		}
-		
-		// Replace bad strings
-		$badSearch = array(\'/javascript:/i\', \'/about:/i\', \'/vbscript:/i\');
-		$badReplace = array(\'javascript<b></b>:\', \'about<b></b>:\', \'vbscript<b></b>:\');
-		$content = preg_replace($badSearch, $badReplace, $content);
-		
-		
-		// Parse args
-		$args = \'src="\' . $content . \'"\';
-		
-		foreach ($params as $key => $value){
-			switch(strtolower($key)){
-			case \'height\':
-			case \'width\':
-				if (preg_match("/^(\\d)+$/", $value))
-					$args .= $key . \'=\' . $value . \'px \';
-			
-				break;
-			
-			case \'float\':
-				if (preg_match("/^(left|right)$/i", $value))
-					$args .= \'style="float: \' . $value . \';"\';
-				break;
-			}
-		}
-		
-		// Return
-		return "<img " . $args . " />";',
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCgkJDQovLyBSZXBsYWNlIGJhZCBzdHJpbmdzDQokYmFkU2VhcmNoID0gYXJyYXkoXCcvamF2YXNjcmlwdDovaVwnLCBcJy9hYm91dDovaVwnLCBcJy92YnNjcmlwdDovaVwnKTsNCiRiYWRSZXBsYWNlID0gYXJyYXkoXCdqYXZhc2NyaXB0PGI+PC9iPjpcJywgXCdhYm91dDxiPjwvYj46XCcsIFwndmJzY3JpcHQ8Yj48L2I+OlwnKTsNCiRjb250ZW50ID0gcHJlZ19yZXBsYWNlKCRiYWRTZWFyY2gsICRiYWRSZXBsYWNlLCAkY29udGVudCk7DQoJCQ0KLy8gUGFyc2UgYXJncw0KJGFyZ3MgPSBcJ3NyYz0iXCcgLiAkY29udGVudCAuIFwnIlwnOw0KCQkNCmZvcmVhY2ggKCRwYXJhbXMgYXMgJGtleSA9PiAkdmFsdWUpew0KCXN3aXRjaChzdHJ0b2xvd2VyKCRrZXkpKXsNCgljYXNlIFwnaGVpZ2h0XCc6DQoJY2FzZSBcJ3dpZHRoXCc6DQoJCWlmIChwcmVnX21hdGNoKCIvXihcXGQpKyQvIiwgJHZhbHVlKSkNCgkJCSRhcmdzIC49ICRrZXkgLiBcJz1cJyAuICR2YWx1ZSAuIFwncHggXCc7DQoJCWJyZWFrOw0KCWNhc2UgXCdmbG9hdFwnOg0KCQlpZiAocHJlZ19tYXRjaCgiL14obGVmdHxyaWdodCkkL2kiLCAkdmFsdWUpKQ0KCQkJJGFyZ3MgLj0gXCdzdHlsZT0iZmxvYXQ6IFwnIC4gJHZhbHVlIC4gXCc7IlwnOw0KCQlicmVhazsNCgl9DQp9DQoJCQ0KLy8gUmV0dXJuDQpyZXR1cm4gIjxpbWcgIiAuICRhcmdzIC4gIiAvPiI7',
+  ),
+  'quote' => 
+  array (
+    'type' => 2,
+    'complex' => false,
+    'mode' => 1,
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9XCciLlVSTChwb3N0VVJMKCRwb3N0SWQpKS4iXCcgcmVsPVwncG9zdFwnIGRhdGEtaWQ9XCckcG9zdElkXCcgY2xhc3M9XCdjb250cm9sLXNlYXJjaCBwb3N0UmVmXCc+Ii5UKCJGaW5kIHRoaXMgcG9zdCIpLiI8L2E+ICI7DQoNCi8vIElmIHRoZXJlIGlzIGEgY2l0YXRpb24sIGFkZCBpdC4NCmlmICghZW1wdHkoJGNpdGF0aW9uKSkgJHF1b3RlIC49ICI8Y2l0ZT4kY2l0YXRpb248L2NpdGU+ICI7DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50XFxuPC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
   ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Fri, 11 Jan 2013 23:35:30 +0100
+// Last updated by: Gab (127.0.0.1) @ Mon, 21 Jan 2013 21:29:09 +0100
 ?>
