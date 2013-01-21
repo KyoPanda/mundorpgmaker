@@ -103,10 +103,10 @@ public function handler_format_format($sender)
 		if ($tag['type'] == 2){
 			$tag['method'] = create_function(
 				'$bbcode, $action, $name, $default, $params, $content',
-				base64_decode($tag['methodBody'])
+				stripslashes(base64_decode($tag['methodBody']))
 			);
 		}
-		
+		//var_export(base64_decode($tag['methodBody']));
 		$bbcode->addRule($name, $tag);
 	}
 	// Registra modifica��es
