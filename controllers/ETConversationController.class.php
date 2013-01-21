@@ -269,10 +269,9 @@ public function index($conversationId = false, $year = false, $month = false)
 		));
 
 		// Quote a post: get the post details (id, name, content) and then set the value of the reply textarea appropriately.
-                $postId = (int)R("quote");
-		if ($postId) {
+                if ($postId = (int)R("quote")) {
 			$post = $this->getPostForQuoting($postId, $conversation["conversationId"]);
-			if ($post) $conversation["draft"] = "[quote=$postId:".$post["username"]."]".ET::formatter()->init($post["content"])->removeQuotes()->get()."[/quote]";
+			if ($post) $conversation["draft"] = "[quote=$postId:".$post["username"]."]".ET::formatter()->init($post["content"])->get()."[/quote]";
 		}
 
 		// Set up the reply form.
@@ -475,7 +474,7 @@ public function quotePost($postId = false)
 	if ($post) {
 		$this->json("postId", $postId);
 		$this->json("member", (C("esoTalk.format.mentions") ? "@" : "").$post["username"]);
-		$this->json("content", ET::formatter()->init($post["content"], false)->removeQuotes()->get());
+		$this->json("content", ET::formatter()->init($post["content"], false)->get());
 		$this->render();
 	}
 }
