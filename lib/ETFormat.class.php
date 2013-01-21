@@ -69,11 +69,10 @@ public function format()
 	// Trigger the "before format" event, which can be used to strip out code blocks.
 	$this->trigger("beforeFormat");
 
-	// Format links, mentions, and quotes.
+	// Format links and mentions.
 	$this->links();
 	if (C("esoTalk.format.mentions")) $this->mentions();
-	$this->quotes();
-
+	
 	// Format bullet and numbered lists.
 	$this->lists();
 
@@ -246,67 +245,6 @@ public function lists()
 
 	return $this;
 }
-
-
-/**
- * Convert [quote] tags into their HTML equivalent.
- *
- * @return ETFormat
- */
-public function quotes()
-{
-	// Starting from the innermost quote, work our way to the outermost, replacing them one-by-one using a
-	// callback function. This is the only simple way to do nested quotes without a lexer.
-	$regexp = "/(.*?)\n?\[quote(?:=(.*?)(]?))?\]\n?(.*?)\n?\[\/quote\]\n{0,2}/ise";
-	while (preg_match($regexp, $this->content)) {
-		$this->content = preg_replace($regexp, "'$1</p>'.\$this->makeQuote('$4', '$2$3').'<p>'", $this->content);
-	}
-
-	return $this;
-}
-
-
-/**
- * The callback function to get quote HTML, given the quote text and its citation.
- *
- * @param string $text The quoted text.
- * @param string $citation The citation text.
- * @return string The quote HTML.
- */
-public function makeQuote($text, $citation = "")
-{
-	// If there is a citation and it has a : in it, split it into a post ID and the rest.
-	if ($citation and strpos($citation, ":") !== false)
-		list($postId, $citation) = explode(":", $citation);
-
-	// Construct the quote.
-	$quote = "<blockquote><p>";
-
-	// If we extracted a post ID from the citation, add a "find this post" link.
-	if (!empty($postId)) $quote .= "<a href='".URL(postURL($postId))."' rel='post' data-id='$postId' class='control-search postRef'>".T("Find this post")."</a> ";
-
-	// If there is a citation, add it.
-	if (!empty($citation)) $quote .= "<cite>$citation</cite> ";
-
-	// Finish constructing and return the quote.
-	$quote .= "$text\n</p></blockquote>";
-	return $quote;
-}
-
-
-/**
- * Remove all quotes from the content string. This can be used to prevent nested quotes when quoting a post.
- *
- * @return ETFormat
- */
-public function removeQuotes()
-{
-	while (preg_match("`(.*)\[quote(\=[^\]]+)?\].*?\[/quote\]`", $this->content))
-		$this->content = preg_replace("`(.*)\[quote(\=[^\]]+)?\].*?\[/quote\]`", "$1", $this->content);
-
-	return $this;
-}
-
 
 /**
  * Convert all @mentions into links to member profiles.
