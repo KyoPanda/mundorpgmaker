@@ -128,14 +128,6 @@ $config["BBCode.tags"] = array (
     ),
     'mode' => 4,
   ),
-  'quote' => 
-  array (
-    'type' => 2,
-    'active' => true,
-    'complex' => false,
-    'mode' => 1,
-    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9XCciLlVSTChwb3N0VVJMKCRwb3N0SWQpKS4iXCcgcmVsPVwncG9zdFwnIGRhdGEtaWQ9XCckcG9zdElkXCcgY2xhc3M9XCdjb250cm9sLXNlYXJjaCBwb3N0UmVmXCc+Ii5UKCJGaW5kIHRoaXMgcG9zdCIpLiI8L2E+ICI7DQoNCi8vIElmIHRoZXJlIGlzIGEgY2l0YXRpb24sIGFkZCBpdC4NCmlmICghZW1wdHkoJGNpdGF0aW9uKSkgJHF1b3RlIC49ICI8Y2l0ZT4kY2l0YXRpb248L2NpdGU+ICI7DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50XFxuPC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
-  ),
   'img' => 
   array (
     'type' => 2,
@@ -152,7 +144,15 @@ $config["BBCode.tags"] = array (
     'simple_start' => '<b>',
     'simple_end' => '</b>',
   ),
+  'quote' => 
+  array (
+    'type' => 2,
+    'active' => true,
+    'complex' => false,
+    'mode' => 1,
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9JyIuVVJMKHBvc3RVUkwoJHBvc3RJZCkpLiInIHJlbD0ncG9zdCcgZGF0YS1pZD0nJHBvc3RJZCcgY2xhc3M9J2NvbnRyb2wtc2VhcmNoIHBvc3RSZWYnPiIuVCgiRmluZCB0aGlzIHBvc3QiKS4iPC9hPiAiOw0KDQovLyBJZiB0aGVyZSBpcyBhIGNpdGF0aW9uLCBhZGQgaXQuDQppZiAoIWVtcHR5KCRjaXRhdGlvbikpew0KICAgICAgICAkcXVvdGUgLj0gIjxjaXRlPiI7DQogICAgICAgICRxdW90ZSAuPSBiYXNlNjRfZGVjb2RlKCRjaXRhdGlvbik7DQogICAgICAgICRxdW90ZSAuPSAiPC9jaXRlPiI7DQp9DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50PC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
+  ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Tue, 22 Jan 2013 20:29:43 +0100
+// Last updated by: Gab (127.0.0.1) @ Tue, 22 Jan 2013 21:06:38 +0100
 ?>
