@@ -4,6 +4,10 @@
 
 // English Definitions for the BBCode plugin.
 $definitions["Create BBCode"] = "Create BBCode";
+$definitions["Modify BBCode"] = "Modify BBCode";
+$definitions["Delete BBCode"] = "Delete BBCode";
+$definitions["Deactivate BBCode"] = "Deactivate BBCode";
+$definitions["Activate BBCode"] = "Activate BBCode";
 
 $definitions["Fixed"] = "Fixed";
 $definitions["Image"] = "Image";

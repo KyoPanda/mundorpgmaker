@@ -47,13 +47,29 @@ fieldset > li.sep {
 
 textarea {
 	width: 80% !important;
-	height: 10em;
+	height: 10em !important;
 	resize: vertical;
-	font-size: 12px;
-	font-family: monospace;
+	font-size: 12px !important;
+	font-family: monospace !important;
 }
 
 span.desc {
 	font-size: 11px;
 	font-family: monospace;
+}
+
+#definedBBCodes{
+    padding-right: 1em;
+}
+
+#definedBBCodes li {
+    display:inline-block;
+    width: 8em;
+}
+
+#definedBBCodes .button {
+    width:7.5em;
+    margin-bottom: 3px !important;
+    margin-left: 3px !important;
+    text-align: center;
 }

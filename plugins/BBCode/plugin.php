@@ -97,7 +97,7 @@ public function handler_format_format($sender)
 	$bbcodeList = C("BBCode.tags");
 	$bbcodeList = $bbcodeList ? $bbcodeList : array();
 	foreach($bbcodeList as $name => $tag){
-		if ($sender->basic && $tag['complex'])
+		if (($sender->basic && $tag['complex']) || (!$tag['active']))
 			continue;
 			
 		if ($tag['type'] == 2){
@@ -106,7 +106,6 @@ public function handler_format_format($sender)
 				stripslashes(base64_decode($tag['methodBody']))
 			);
 		}
-		//var_export(base64_decode($tag['methodBody']));
 		$bbcode->addRule($name, $tag);
 	}
 	// Registra modificações
@@ -136,61 +135,140 @@ public function handler_format_afterFormat($sender)
  */
 public function settings($sender)
 {
-	// Inicia o formul�rio
+	// Inicia o formulário
 	$form = ETFactory::make("form");
 	$form->action = URL("admin/plugins/settings/BBCode");
 	
-	// Se o formul�rio foi enviado
-	if ($form->validPostBack("createBBC")) {
+        // Envia formulário para view
+        $sender->data("pluginSettingsForm", $form);
+        
+        // Tags definidas
+        $definedTags = C('BBCode.tags');
+        if (!$definedTags) $definedTags = array();
+        
+        // Se o formulário de criação foi enviado
+	if ($form->validPostBack()){
+            if ($form->isPostBack("createBBC")) {
 		$name = $form->getValue("tagName");
 		$type = (int)$form->getValue('tagType');
 		
 		$tag  = array(
+                        'active'  => true,
 			'type'    => $type,
 			'complex' => (bool)$form->getValue("tagComplex")
 		);
 		
 		switch ($type){
-			case 0: // TAG SIMPLES
-				$tag['simple_start'] = $form->getValue('tagStart');
-				$tag['simple_end']   = $form->getValue('tagEnd');
-				break;
-			case 1: // TAG APRIMORADA
-				$tag['template'] = $form->getValue('tagTemplate');
-				$tag['allow']    = array();
-				$tag['mode']     = BBCODE_MODE_ENHANCED;
-				
-				$names = $form->getValue('tagAttrName');
-				$rgxps = $form->getValue('tagAttrRgx' );
-				foreach ($names as $id => $attrName){
-					$rgx = $rgxps[$id];
-					if (empty($attrName) or (@preg_match($rgx, '') === false))
-						continue;
-						
-					$tag['allow'][$attrName] = $rgx;
-				}
-				
-				break;
-			case 2: // TAG C/ CALLBACK
-				$tag['mode'] = BBCODE_MODE_CALLBACK;
-				$tag['methodBody'] = base64_encode($form->getValue('tagFunction'));
-				break;
+                case 0: // TAG SIMPLES
+                        $tag['simple_start'] = $form->getValue('tagStart');
+                        $tag['simple_end']   = $form->getValue('tagEnd');
+                        break;
+                case 1: // TAG APRIMORADA
+                        $tag['template'] = $form->getValue('tagTemplate');
+                        $tag['allow']    = array();
+                        $tag['mode']     = BBCODE_MODE_ENHANCED;
+
+                        $names = $form->getValue('tagAttrName');
+                        $rgxps = $form->getValue('tagAttrRgx' );
+                        foreach ($names as $id => $attrName){
+                                $rgx = $rgxps[$id];
+                                if (empty($attrName) or (@preg_match($rgx, '') === false))
+                                        continue;
+
+                                $tag['allow'][$attrName] = $rgx;
+                        }
+
+                        break;
+                case 2: // TAG C/ CALLBACK
+                        $tag['mode'] = BBCODE_MODE_CALLBACK;
+                        $tag['methodBody'] = base64_encode($form->getValue('tagFunction'));
+                        break;
 		}
-		
-		$definedTags = C('BBCode.tags');
-		if (!$definedTags) $definedTags = array();
 		
 		$definedTags[$name] = $tag;
 		$config = array('BBCode.tags' => $definedTags);
-		ET::writeConfig($config);
-	}
+		ET::writeConfig($config);       
+            } elseif ($form->isPostBack("modifyBBCQuery")){ // Se o formulário de modificação foi enviado
+                // Define array com informações necessárias
+                $name    = $form->getValue('modifyBBCQuery');
+                $tag     = array('name' => $name);
+                $tagData = array_merge($tag, $definedTags[$name]);
+                if ($tagData['type'] == 2)
+                    $tagData['methodBody'] = stripslashes(base64_decode($tagData['methodBody']));
+
+                // Envia bbcode
+                $sender->data("bbcode", $tagData);
+
+                // CSS para página de modificação
+                $sender->addCSSFile($this->getResource("modifyStyles.css"));
+
+                // Retorna view
+                return $this->getView('modify');
+            } else {
+                $origName    = $form->getValue("tagOrigName");
+                if (isset($definedTags[$origName])){
+                    $tag         = $definedTags[$origName];
+                    $name        = $form->getValue("tagName");
+                    $complex     = $form->getValue("tagComplex");
+                    $writeConfig = false;
+
+                    if ($form->isPostBack("modifyBBC")){ // Se ocorreu uma modificação na tag
+                        $type = $tag['type'];
+                        
+                        switch ($type){
+                        case 0: // TAG SIMPLES
+                                $tag['simple_start'] = $form->getValue('tagStart');
+                                $tag['simple_end']   = $form->getValue('tagEnd');
+                                break;
+                        case 1: // TAG APRIMORADA
+                                $tag['template'] = $form->getValue('tagTemplate');
+                                $tag['allow']    = array();
+                                
+                                $names = $form->getValue('tagAttrName');
+                                $rgxps = $form->getValue('tagAttrRgx' );
+                                foreach ($names as $id => $attrName){
+                                        $rgx = $rgxps[$id];
+                                        if (empty($attrName) or (@preg_match($rgx, '') === false))
+                                                continue;
+
+                                        $tag['allow'][$attrName] = $rgx;
+                                }
+
+                                break;
+                        case 2: // TAG C/ CALLBACK
+                                $tag['methodBody'] = base64_encode($form->getValue('tagFunction'));
+                                break;
+                        }
+                        
+                        unset($definedTags[$origName]);
+                        $definedTags[$name] = $tag;
+                        $writeConfig = true;
+                        
+                    } elseif ($form->isPostBack("deleteBBC")){ // Se a tag deve ser deletada
+                        unset($definedTags[$origName]);
+                        $writeConfig = true;
+                    } elseif ($form->isPostBack("activateBBC")){ // Se a tag deve ser ativada
+                        $definedTags[$origName]['active'] = true;
+                        $writeConfig = true;
+                    } elseif ($form->isPostBack("deactivateBBC")){ // Se a tag deve ser desativada
+                        $definedTags[$origName]['active'] = false;
+                        $writeConfig = true;
+                    }
+
+                    if ($writeConfig){
+                        $config = array('BBCode.tags' => $definedTags);
+                        ET::writeConfig($config);
+                    }
+                }
+            }
+        }
+        
+        // Determina informações necessárias para rederizar formulário
+        $sender->data("bbcodes", $definedTags);
+
+        // Adiciona CSS
+        $sender->addCSSFile($this->getResource("settingsStyles.css"));
 	
-	// Determina informa��es necess�rias para rederizar formul�rio
-	$sender->data("pluginSettingsForm", $form);
-	$bbcodes = C("BBCode.tags");
-	$sender->data("bbcodes", $bbcodes ? $bbcodes : array());
-	$sender->addCSSFile($this->getResource("settingsStyles.css"));
-		
 	// Renderiza view
 	return $this->getView('settings');
 }

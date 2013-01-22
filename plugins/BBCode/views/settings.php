@@ -17,21 +17,20 @@ $form = $data["pluginSettingsForm"];
 	<li class='sep'></li>
 	<label>Lista de BBCodes</label>
 	
-	<ol>
-		<?php
-			if (count($data["bbcodes"])):
-				foreach ($data["bbcodes"] as $bbcode => $tag):
-		?>
-				<li><?php echo $bbcode;?></li>
-		<?php
-				endforeach;
-			else:
-		?>
-			Não existem BBCodes definidos
-		<?php
-			endif;
-		?>
-	</ol>
+        <?php echo $form->open(); ?>
+            <ol id="definedBBCodes">
+                    <?php
+                            if (count($data["bbcodes"])):
+                                foreach ($data["bbcodes"] as $bbcode => $tag)
+                                    echo $form->button("modifyBBCQuery", $bbcode, array("class" => "button submit"));
+                            else:
+                    ?>
+                            Não existem BBCodes definidos
+                    <?php
+                            endif;
+                    ?>
+            </ol>
+       <?php echo $form->close(); ?>
 	
 	<li class='sep'></li>
 	
@@ -92,7 +91,7 @@ $form = $data["pluginSettingsForm"];
 			<?php echo $form->input("tagType", "hidden", array('value' => 2)); ?>
 			<fieldset class='callback area'>
 				<label>Nome da Tag</label>
-				<?php echo $form->input("tagName", "text"); ?>
+				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
 				<label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
 				<li class='sep'></li>

@@ -1,0 +1,48 @@
+/* 
+    Document   : modifyStyles
+    Created on : 22/01/2013, 16:03:18
+    Author     : Gab
+    Description:
+        Estilos para a página de modificação de BBCode.
+*/
+
+.form {
+    padding-left: 8px;
+    padding-bottom: 8px;
+}
+
+label {
+    margin-right: 5px;
+    line-height: 1.8em;
+    width: 140px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.smallText {
+	width: 100px !important;
+}
+
+.inline {
+	display: inline;
+}
+
+li.sep {
+	list-style: none;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid white;
+	margin: 15px 0;
+}
+
+span.desc {
+	font-size: 11px;
+	font-family: monospace;
+}
+
+textarea {
+        width: 90% !important;
+        height: 20em;
+        resize: vertical;
+	font-size: 12px !important;
+	font-family: monospace !important;
+}
