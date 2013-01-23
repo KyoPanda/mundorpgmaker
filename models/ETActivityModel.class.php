@@ -9,12 +9,6 @@ if (!defined("IN_ESOTALK")) exit;
  * provides methods to define new types of activity/notifications, add new activity/notification entries,
  * and send email notifications.
  *
- * In more detail: each piece of activity or notification is of a certain "type" - for example, "mention" for
- * @mentions or "groupChange" for when a user's group is changed. Each activity type can have one or more
- * "projections", or places where it will be projected to. There are three types of projections: "activity"
- * (to be shown on the member's profile), "notification" (to be shown in the member's notifications), and
- * "email" (to be sent out as an email to the member.)
- *
  * For each type, one or more projections can be set to a callback function, which should return an array of
  * information to display (more on that later.)
  *

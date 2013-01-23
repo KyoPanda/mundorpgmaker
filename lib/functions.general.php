@@ -522,6 +522,17 @@ function colorPack($rgb, $normalize = false)
 	return "#".str_pad(dechex($out), 6, 0, STR_PAD_LEFT);
 }
 
+/**
+ * Converts <br> and <br/> elements to new lines.
+ *
+ * @param string $string String to be converted.
+ * @return The converted string.
+ */
+function br2nl($string){ 
+  $return=eregi_replace('<br[[:space:]]*/?'. 
+    '[[:space:]]*>',chr(13).chr(10),$string); 
+  return $return; 
+} 
 
 // json_encode for PHP < 5.2.0.
 if (!function_exists("json_encode")) {

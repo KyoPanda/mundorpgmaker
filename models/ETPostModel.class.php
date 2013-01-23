@@ -213,46 +213,6 @@ public function create($conversationId, $memberId, $content, $title = "")
 		->where("channelId", ET::SQL()->select("channelId")->from("conversation")->where("conversationId=:conversationId")->bind(":conversationId", $conversationId)->exec()->result())
 		->exec();
 
-	// Parse the post content for @mentions, and notify any members who were mentioned.
-	if (C("esoTalk.format.mentions")) {
-
-		$names = ET::formatter()->getMentions($content);
-
-		if (count($names)) {
-
-			// Get the member details from the database.
-			$sql = ET::SQL()
-				->where("m.username IN (:names)")
-				->bind(":names", $names)
-				->where("m.memberId != :userId")
-				->bind(":userId", $memberId);
-			$members = ET::memberModel()->getWithSQL($sql);
-
-			$data = array(
-				"postId" => (int)$id,
-				"title" => $title
-			);
-
-			$i = 0;
-			foreach ($members as $member) {
-
-				// Only send notifications to the first 10 members who are mentioned to prevent abuse of the system.
-				if ($i++ > 10) break;
-
-				// Check if this member is allowed to view this conversation before sending them a notification.
-				$sql = ET::SQL()
-					->select("conversationId")
-					->from("conversation c")
-					->where("conversationId", $conversationId);
-				ET::conversationModel()->addAllowedPredicate($sql, $member);
-				if (!$sql->exec()->numRows()) continue;
-
-				ET::activityModel()->create("mention", $member, ET::$session->user, $data);
-			}
-		}
-
-	}
-
 	return $id;
 }
 

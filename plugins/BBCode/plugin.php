@@ -36,9 +36,11 @@ class ETPlugin_BBCode extends ETPlugin {
 public function handler_conversationController_renderBefore($sender)
 {
 	$sender->addJSFile($this->getResource("bbcode.js"));
+        $sender->addJSFile($this->getResource("prettify/prettify.js"));
+        $sender->addJSFile($this->getResource("highlight.js"));
 	$sender->addCSSFile($this->getResource("bbcode.css"));
+        $sender->addCSSFile($this->getResource("prettify/prettify.css"));
 }
-
 
 /**
  * Add an event handler to the "getEditControls" method of the conversation controller to add BBCode
@@ -56,7 +58,6 @@ public function handler_conversationController_getEditControls($sender, &$contro
 	addToArrayString($controls, "bold", "<a href='javascript:BBCode.bold(\"$id\");void(0)' title='".T("Bold")."' class='bbcode-b'><span>".T("Bold")."</span></a>", 0);
 }
 
-
 /**
  * Add an event handler to the formatter to take out and store code blocks before formatting takes place.
  *
@@ -64,13 +65,13 @@ public function handler_conversationController_getEditControls($sender, &$contro
  */
 public function handler_format_beforeFormat($sender)
 {
-	return;
+        return;
 	// Block-level [fixed] tags will become <pre>.
 	$this->blockFixedContents = array();
 	$hideFixed = create_function('&$blockFixedContents, $contents', '
 		$blockFixedContents[] = $contents;
 		return "</p><pre></pre><p>";');
-	$regexp = "/(.*)^\[code\]\n?(.*?)\n?\[\/code]$/imse";
+	$regexp = "/(.*)^\[code(=.*)?\]\n?(.*?)\n?\[\/code]$/imse";
 	while (preg_match($regexp, $sender->content)) $sender->content = preg_replace($regexp, "'$1' . \$hideFixed(\$this->blockFixedContents, '$2')", $sender->content);
 
 	// Inline-level [fixed] tags will become <code>.
@@ -78,9 +79,8 @@ public function handler_format_beforeFormat($sender)
 	$hideFixed = create_function('&$inlineFixedContents, $contents', '
 		$inlineFixedContents[] = $contents;
 		return "<code></code>";');
-	$sender->content = preg_replace("/\[code\]\n?(.*?)\n?\[\/code]/ise", "\$hideFixed(\$this->inlineFixedContents, '$1')", $sender->content);
+	$sender->content = preg_replace("/\[code(=.*)?]\]\n?(.*?)\n?\[\/code]/ise", "\$hideFixed(\$this->inlineFixedContents, '$1')", $sender->content);
 }
-
 
 /**
  * Add an event handler to the formatter to parse BBCode and format it into HTML.
@@ -103,14 +103,16 @@ public function handler_format_format($sender)
 		if ($tag['type'] == 2){
 			$tag['method'] = create_function(
 				'$bbcode, $action, $name, $default, $params, $content',
-				stripslashes(base64_decode($tag['methodBody']))
+				base64_decode($tag['methodBody'])
 			);
 		}
 		$bbcode->addRule($name, $tag);
 	}
+        
 	// Registra modificações
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
+
 
 /**
  * Add an event handler to the formatter to put code blocks back in after formatting has taken place.
@@ -194,7 +196,7 @@ public function settings($sender)
                 $tag     = array('name' => $name);
                 $tagData = array_merge($tag, $definedTags[$name]);
                 if ($tagData['type'] == 2)
-                    $tagData['methodBody'] = stripslashes(base64_decode($tagData['methodBody']));
+                    $tagData['methodBody'] = base64_decode($tagData['methodBody']);
 
                 // Envia bbcode
                 $sender->data("bbcode", $tagData);

@@ -10,6 +10,8 @@ $definitions["Delete BBCode"] = "Deletar BBCode";
 $definitions["Deactivate BBCode"] = "Desativar BBCode";
 $definitions["Activate BBCode"] = "Ativar BBCode";
 
+$definitions["Code"] = "Código";
+
 $definitions["Fixed"] = "Fixo";
 $definitions["Image"] = "Imagem";
 $definitions["Link"] = "Link";

@@ -202,7 +202,6 @@ public function index($conversationId = false, $year = false, $month = false)
 		$this->addJSVar("conversationUpdateIntervalStart", C("esoTalk.conversation.updateIntervalStart"));
 		$this->addJSVar("conversationUpdateIntervalMultiplier", C("esoTalk.conversation.updateIntervalMultiplier"));
 		$this->addJSVar("conversationUpdateIntervalLimit", C("esoTalk.conversation.updateIntervalLimit"));
-		$this->addJSVar("mentions", C("esoTalk.format.mentions"));
 		$this->addJSVar("time", time());
 		$this->addJSFile("js/lib/jquery.autogrow.js");
 		$this->addJSFile("js/scrubber.js");
@@ -350,8 +349,7 @@ public function start($member = false)
 		$this->addJSFile("js/scrubber.js");
 		$this->addJSFile("js/autocomplete.js");
 		$this->addJSFile("js/conversation.js");
-		$this->addJSVar("mentions", C("esoTalk.format.mentions"));
-
+		
 		// If there's a member name in the querystring, make the conversation that we're starting private
 		// with them and redirect.
 		if ($member and ET::$session->validateToken(R("token"))) {
@@ -451,8 +449,7 @@ public function post($postId = false)
 
 /**
  * Show a post's details in JSON format so they can be used to construct a quote. The JSON output will
- * include the postId, member (prefixed with an @ if mentions are enabled), and the content (with inner quotes
- * removed.)
+ * include the postId, member, and the content (with inner quotes removed.)
  *
  * @param int $postId The post ID.
  * @return void
@@ -473,7 +470,7 @@ public function quotePost($postId = false)
 	$post = $this->getPostForQuoting($postId, $conversation["conversationId"]);
 	if ($post) {
 		$this->json("postId", $postId);
-		$this->json("member", (C("esoTalk.format.mentions") ? "@" : "").$post["username"]);
+		$this->json("member", $post["username"]);
 		$this->json("content", ET::formatter()->init($post["content"], false)->get());
 		$this->render();
 	}

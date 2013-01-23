@@ -69,18 +69,8 @@ public function format()
 	// Trigger the "before format" event, which can be used to strip out code blocks.
 	$this->trigger("beforeFormat");
 
-	// Format links and mentions.
-	$this->links();
-	if (C("esoTalk.format.mentions")) $this->mentions();
-        
-	// Format bullet and numbered lists.
-	$this->lists();
-
 	// Trigger the "format" event, where all regular formatting can be applied (bold, italic, etc.)
 	$this->trigger("format");
-
-        // Format whitespace, adding in <br/> and <p> tags.
-	$this->whitespace();
 
 	// Trigger the "after format" event, where code blocks can be put back in.
 	$this->trigger("afterFormat");
@@ -158,127 +148,6 @@ public function closeTags()
 
 	return $this;
 }
-
-
-/**
- * Convert whitespace into appropriate HTML tags (<br/> and <p>).
- *
- * @return ETFormat
- */
-public function whitespace()
-{
-	// Trim the edges of whitespace.
-	$this->content = trim($this->content);
-
-	// Add paragraphs and breakspaces.
-	$this->content = "<p>".str_replace(array("\n\n", "\n"), array("</p><p>", "<br/>"), $this->content)."</p>";
-
-	// Strip empty paragraphs.
-	$this->content = preg_replace(array("/<p>\s*<\/p>/i", "/(?<=<p>)\s*(?:<br\/>)*/i", "/\s*(?:<br\/>)*\s*(?=<\/p>)/i"), "", $this->content);
-	$this->content = str_replace("<p></p>", "", $this->content);
-
-	return $this;
-}
-
-
-/**
- * Convert inline URLs and email addresses into HTML anchor tags.
- *
- * @return ETFormat
- */
-public function links()
-{
-	// Convert normal links - http://www.example.com, www.example.com - using a callback function.
-	$this->content = preg_replace_callback(
-		"/(?<=\s|^|>|\()(\w+:\/\/)?([\w\-\.]+\.(?:com|net|org|gov|edu|co|biz|info|tv|mil|cn|jp|ru|eu|nz|ca|uk|de)[^\s<]*?)(?=[\s\.,?!>\)]*(?:\s|>|\)|$))/i",
-		array($this, "linksCallback"), $this->content);
-
-	// Convert email links.
-	$this->content = preg_replace("/[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/i", "<a href='mailto:$0'>$0</a>", $this->content);
-
-	return $this;
-}
-
-
-/**
- * The callback function used to replace inline URLs with HTML anchor tags.
- *
- * @param array $matches An array of matches from the regular expression.
- * @return string The replacement HTML anchor tag.
- */
-public function linksCallback($matches)
-{
-	// If we're not doing basic formatting, YouTube embedding is enabled, and this is a YouTube video link,
-	// then return an embed tag.
-	if (!$this->basic and C("esoTalk.format.youtube") and preg_match("/^(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i", $matches[2], $youtube)) {
-		$id = $youtube[1];
-		$width = 400;
-		$height = 225;
-		return "<div class='video'><object width='$width' height='$height'><param name='movie' value='http://www.youtube.com/v/$id'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='http://www.youtube.com/v/$id' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='$width' height='$height'></embed></object></div>";
-	}
-
-	// Otherwise, return an HTML anchor tag.
-	return "<a href='".($matches[1] ? $matches[1] : "http://").$matches[2]."' rel='nofollow external' target='_blank'>".$matches[0]."</a>";
-}
-
-
-/**
- * Convert simple bullet and numbered lists (eg. - list item\n - another list item) into their HTML equivalent.
- *
- * @return ETFormat
- */
-public function lists()
-{
-	// Convert ordered lists - 1. list item\n 2. list item.
-	// We do this by matching against 2 or more lines which begin with a number, passing them together to a
-	// callback function, and then wrapping each line with <li> tags.
-	$orderedList = create_function('$list',
-		'$list = preg_replace("/^[0-9]+[.)]\s+([^\n]*)(?:\n|$)/m", "<li>$1</li>", trim($list));
-		return $list;');
-	$this->content = preg_replace("/(?:^[0-9]+[.)]\s+([^\n]*)(?:\n|$)){2,}/me", "'</p><ol>'.\$orderedList('$0').'</ol><p>'", $this->content);
-
-	// Same goes for unordered lists, but with a - or a * instead of a number.
-	$unorderedList = create_function('$list',
-		'$list = preg_replace("/^ *[-*]\s*([^\n]*)(?:\n|$)/m", "<li>$1</li>", trim($list));
-		return "$list";');
-	$this->content = preg_replace("/(?:^ *[-*]\s*([^\n]*)(?:\n|$)){2,}/me", "'</p><ul>'.\$unorderedList('$0').'</ul><p>'", $this->content);
-
-	return $this;
-}
-
-/**
- * Convert all @mentions into links to member profiles.
- *
- * @return ETFormat
- */
-public function mentions()
-{
-	$this->content = preg_replace(
-		'/(^|[\s,\.:])@(\w{3,20})\b/ie',
-		"'$1' . base64_encode('<a href=\"' . URL(\"member/name/\" . urlencode('$2')) . '\">$2</a>')",
-		$this->content
-	);
-
-	return $this;
-}
-
-
-/**
- * Get all of the @mentions present in a content string, and return the member names in an array.
- *
- * @param string $content The content string to get mentions from.
- * @return array
- */
-public function getMentions($content)
-{
-        $matches = [];
-	preg_match_all('/(^|[\s,\.:])@(\w{3,20})\b/i', $content, $matches, PREG_SET_ORDER);
-	$names = array();
-        foreach ($matches as $v) $names[] = $v[2];
-
-	return $names;
-}
-
 
 /**
  * Highlight a list of words in the content string.

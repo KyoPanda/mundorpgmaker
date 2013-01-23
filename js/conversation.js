@@ -199,8 +199,6 @@ initReply: function() {
 		ETConversation.editingReply = $(this).val() ? true : false;
 	});
 
-	if (ET.mentions) new ETAutoCompletePopup($("#reply textarea"), "@");
-
 	// Add click events to the buttons.
 	$("#reply .saveDraft").click(function(e){ ETConversation.saveDraft(); e.preventDefault(); });
 	$("#reply .discardDraft").click(function(e){ ETConversation.discardDraft(); e.preventDefault(); });
