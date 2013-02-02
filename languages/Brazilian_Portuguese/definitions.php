@@ -67,6 +67,12 @@ $definitions["Already have an account? <a href='%s' class='link-login'>Log in!</
 $definitions["Appearance"] = "Aparência";
 $definitions["Automatically star conversations that I reply to"] = "Curta automaticamente os tópicos que comentei";
 $definitions["Avatar"] = "Avatar";
+$definitions["Signature"] = "Assinatura";
+$definitions["Edit Signature"] = "Editar Assinatura";
+$definitions["Character Left"] = "Caractere Restante";
+$definitions["Characters Left"] = "Caracteres Restantes";
+$definitions["Signature exceeded character limit (%d)"] = "Assinatura excedeu o limite de caracteres (%d)";
+$definitions["Signature exceeded max size (%d)"] = "Assinatura excedeu o tamanho máximo (%d)";
 
 $definitions["Back to channels"] = "Retornar às categorias";
 $definitions["Back to conversation"] = "Retornar ao tópico";

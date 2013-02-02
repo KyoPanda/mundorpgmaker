@@ -70,6 +70,12 @@ $definitions["Already have an account? <a href='%s' class='link-login'>Log in!</
 $definitions["Appearance"] = "Appearance";
 $definitions["Automatically star conversations that I reply to"] = "Automatically follow conversations that I reply to";
 $definitions["Avatar"] = "Avatar";
+$definitions["Signature"] = "Signature";
+$definitions["Edit Signature"] = "Edit Signature";
+$definitions["Character Left"] = "Character Left";
+$definitions["Characters Left"] = "Characters Left";
+$definitions["Signature exceeded character limit (%d)"] = "Signature exceeded character limit (%d)";
+$definitions["Signature exceeded max size (%d)"] = "Signature exceeded max size (%d)";
 
 $definitions["Back to channels"] = "Back to channels";
 $definitions["Back to conversation"] = "Back to conversation";

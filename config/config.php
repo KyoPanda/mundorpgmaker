@@ -14,7 +14,7 @@ $config["esoTalk.urls.friendly"] = true;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1358891198;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1359820748;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -92,18 +92,6 @@ $config["BBCode.tags"] = array (
     'simple_start' => '<sub>',
     'simple_end' => '</sub>',
   ),
-  'size' => 
-  array (
-    'type' => 1,
-    'active' => true,
-    'complex' => false,
-    'template' => '<span style="font-size: {$_default}pt">{$_content}</span>',
-    'allow' => 
-    array (
-      '_default' => '/^[1-8]?[0-9]*$/',
-    ),
-    'mode' => 4,
-  ),
   'color' => 
   array (
     'type' => 1,
@@ -136,14 +124,6 @@ $config["BBCode.tags"] = array (
     'simple_start' => '<b>',
     'simple_end' => '</b>',
   ),
-  'quote' => 
-  array (
-    'type' => 2,
-    'active' => true,
-    'complex' => false,
-    'mode' => 1,
-    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9JyIuVVJMKHBvc3RVUkwoJHBvc3RJZCkpLiInIHJlbD0ncG9zdCcgZGF0YS1pZD0nJHBvc3RJZCcgY2xhc3M9J2NvbnRyb2wtc2VhcmNoIHBvc3RSZWYnPiIuVCgiRmluZCB0aGlzIHBvc3QiKS4iPC9hPiAiOw0KDQovLyBJZiB0aGVyZSBpcyBhIGNpdGF0aW9uLCBhZGQgaXQuDQppZiAoIWVtcHR5KCRjaXRhdGlvbikpew0KICAgICAgICAkcXVvdGUgLj0gIjxjaXRlPiI7DQogICAgICAgICRxdW90ZSAuPSBiYXNlNjRfZGVjb2RlKCRjaXRhdGlvbik7DQogICAgICAgICRxdW90ZSAuPSAiPC9jaXRlPiI7DQp9DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50PC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
-  ),
   'img' => 
   array (
     'type' => 2,
@@ -158,9 +138,42 @@ $config["BBCode.tags"] = array (
     'type' => 2,
     'complex' => false,
     'mode' => 1,
-    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KJGh0bWxjb250ZW50ID0gIjxwcmUgY2xhc3M9J3ByZXR0eXByaW50Jz48Y29kZSBjbGFzcz0nbGFuZ3VhZ2UiOw0KaWYgKCRkZWZhdWx0KXsNCiAgICAgICAgJGh0bWxjb250ZW50IC49ICItJGRlZmF1bHQiOw0KfQ0KJGh0bWxjb250ZW50IC49ICInPiI7DQokaHRtbGNvbnRlbnQgLj0gdHJpbShicjJubCgkY29udGVudCkpOw0KJGh0bWxjb250ZW50IC49ICI8L2NvZGU+PC9wcmU+IjsNCg0KcmV0dXJuICRodG1sY29udGVudDs=',
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KJGh0bWxjb250ZW50ID0gIjxwcmUgY2xhc3M9J2JydXNoOiAiOw0KaWYgKCRkZWZhdWx0KXsNCiAgICAgICAgJGh0bWxjb250ZW50IC49ICIkZGVmYXVsdCI7DQp9DQokaHRtbGNvbnRlbnQgLj0gIic+IjsNCiRodG1sY29udGVudCAuPSB0cmltKGJyMm5sKCRjb250ZW50KSk7DQokaHRtbGNvbnRlbnQgLj0gIjwvcHJlPiI7DQoNCnJldHVybiAkaHRtbGNvbnRlbnQ7',
+    'content' => 2,
+  ),
+  'right' => 
+  array (
+    'active' => true,
+    'type' => 0,
+    'complex' => false,
+    'simple_start' => '<div align=\'right\'>',
+    'simple_end' => '</div>',
+  ),
+  'left' => 
+  array (
+    'active' => true,
+    'type' => 0,
+    'complex' => false,
+    'simple_start' => '<div align=\'left\'>',
+    'simple_end' => '</div>',
+  ),
+  'center' => 
+  array (
+    'active' => true,
+    'type' => 0,
+    'complex' => false,
+    'simple_start' => '<div align=\'center\'>',
+    'simple_end' => '</div>',
+  ),
+  'quote' => 
+  array (
+    'type' => 2,
+    'active' => true,
+    'complex' => false,
+    'mode' => 1,
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9JyIuVVJMKHBvc3RVUkwoJHBvc3RJZCkpLiInIHJlbD0ncG9zdCcgZGF0YS1pZD0nJHBvc3RJZCcgY2xhc3M9J2NvbnRyb2wtc2VhcmNoIHBvc3RSZWYnPiIuVCgiRmluZCB0aGlzIHBvc3QiKS4iPC9hPiAiOw0KDQovLyBJZiB0aGVyZSBpcyBhIGNpdGF0aW9uLCBhZGQgaXQuDQppZiAoIWVtcHR5KCRjaXRhdGlvbikpew0KICAgICAgICAkcXVvdGUgLj0gIjxjaXRlPiI7DQogICAgICAgICRxdW90ZSAuPSAkY2l0YXRpb247DQogICAgICAgICRxdW90ZSAuPSAiPC9jaXRlPiI7DQp9DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50PC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
   ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Wed, 23 Jan 2013 01:52:17 +0100
+// Last updated by: Gab (127.0.0.1) @ Sat, 02 Feb 2013 19:50:25 +0100
 ?>

@@ -128,3 +128,6 @@ $config["esoTalk.avatars.width"] = 64;
 $config["esoTalk.avatars.height"] = 64;
 $config["esoTalk.avatars.thumbWidth"] = 20;
 $config["esoTalk.avatars.thumbHeight"] = 20;
+
+// Signature configuration
+$config["esoTalk.signature.maxChars"] = 2000;

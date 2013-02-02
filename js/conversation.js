@@ -326,6 +326,8 @@ addReply: function() {
 
 			// Reset the post-checking timeout.
 			ETConversation.updateInterval.reset(ET.conversationUpdateIntervalStart);
+                        
+                        if (SyntaxHighlighter) SyntaxHighlighter.highlight();
 
 		},
 		beforeSend: function() {
@@ -702,6 +704,8 @@ saveEditPost: function(postId, content) {
 
 			ETConversation.editingPosts--;
 			ETConversation.redisplayAvatars();
+                        
+                        if (SyntaxHighlighter) SyntaxHighlighter.highlight();
 		}
 	});
 },
@@ -1043,7 +1047,7 @@ wrapText: function(textarea, tagStart, tagEnd, selectArgument, defaultArgumentVa
 },
 
 // Toggle preview on an editing area.
-togglePreview: function(id, preview) {
+togglePreview: function(id, preview, bodyOnly) {
 
 	// If the preview box is checked...
 	if (preview) {
@@ -1056,16 +1060,20 @@ togglePreview: function(id, preview) {
 		$.ETAjax({
 			url: "conversation/preview.ajax",
 			type: "post",
-			data: {content: $("#" + id + " textarea").val()},
-				success: function(data) {
-
-				// Keep the minimum height.
+			data: {
+                            content: $("#" + id + " textarea").val(),
+                            bodyOnly: bodyOnly ? true : false
+                        },
+			success: function(data) {
+                                // Keep the minimum height.
 				$("#" + id + "-preview").css("min-height", $("#" + id + "-textarea").innerHeight());
 
 				// Hide the textarea, and show the preview.
 				$("#" + id + " textarea").hide();
 				$("#" + id + "-preview").show()
 				$("#" + id + "-preview").html(data.content);
+                                
+                                if (SyntaxHighlighter) SyntaxHighlighter.highlight();
 			}
 		});
 	}

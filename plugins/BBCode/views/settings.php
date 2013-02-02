@@ -56,6 +56,9 @@ $form = $data["pluginSettingsForm"];
 				<label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text', 'value' => '')); ?>
 				
+                                <label>Conteúdo Fixo?</label>
+				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
+                                
 				<li class='sep'></li>
 				<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 			</fieldset>
@@ -70,16 +73,11 @@ $form = $data["pluginSettingsForm"];
 				<?php echo $form->input("tagTemplate", "text", array('value' => '')); ?>
 				<label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
+                                <label>Conteúdo Fixo?</label>
+				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
 				<li class='sep'></li>
 				<label>Atributos</label>
 				<ol id="AttrList">
-					<li>
-						<label class='inline'>Nome</label>
-						<?php echo $form->input("tagAttrName[]", "text", array("class" => "smallText", 'value' => '')); ?>
-						<label class='inline'>Validação</label>
-						<?php echo $form->input("tagAttrRgx[]", "text", array("class" => "smallText", 'value' => '')); ?>
-						<label class='inline'><a href="javascript:void(0)" class="RemoveAttr">[Remover]</a></label>
-					</li>
 				</ol>
 				<a href="javascript:void(0)" id="AddAttr">[Adicionar Atributo]</a>
 				<li class='sep'></li>
@@ -94,6 +92,8 @@ $form = $data["pluginSettingsForm"];
 				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
 				<label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
+                                <label>Conteúdo Fixo?</label>
+				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
 				<li class='sep'></li>
 				<label style='width:100%'>Função de validação</label>
 				<span class='desc'><strong>Argumentos:</strong> $bbcode, $action, $name, $default, $params, $content</span>

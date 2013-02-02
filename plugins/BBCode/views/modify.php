@@ -22,9 +22,16 @@ $bbc  = $data["bbcode"];
     <label>Tag complexa?</label>
     <?php 
         $complexParams = array('class' => 'text');
-        if ($bbc['complex']) $complex['checked'] = '';
+        if ($bbc['complex']) $complexParams['checked'] = '';
         
-        echo $form->input("tagComplex", "checkbox", $complexParams); 
+        echo $form->checkbox("tagComplex", $complexParams); 
+    ?><br/>
+    <label>Conteúdo Fixo?</label>
+    <?php 
+        $fixedParams = array('class' => 'text');
+        if ($bbc['content'] == BBCODE_VERBATIM) $fixedParams['checked'] = '';
+        
+        echo $form->checkbox("tagFixed", $fixedParams); 
     ?><br/>
 
     <li class='sep'></li>

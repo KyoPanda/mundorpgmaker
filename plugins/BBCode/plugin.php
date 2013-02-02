@@ -36,10 +36,17 @@ class ETPlugin_BBCode extends ETPlugin {
 public function handler_conversationController_renderBefore($sender)
 {
 	$sender->addJSFile($this->getResource("bbcode.js"));
-        $sender->addJSFile($this->getResource("prettify/prettify.js"));
+        $sender->addJSFile($this->getResource("SyntaxHighlighter/shCore.js"));
+        $sender->addJSFile($this->getResource("SyntaxHighlighter/shBrushes.js"));
         $sender->addJSFile($this->getResource("highlight.js"));
+        
 	$sender->addCSSFile($this->getResource("bbcode.css"));
-        $sender->addCSSFile($this->getResource("prettify/prettify.css"));
+        $sender->addCSSFile($this->getResource("SyntaxHighlighter/shCore.css"));
+        $sender->addCSSFile($this->getResource("SyntaxHighlighter/shCoreEclipse.css"));
+}
+public function handler_settingsController_renderBefore($sender)
+{
+    return $this->handler_conversationController_renderBefore($sender);
 }
 
 /**
@@ -58,28 +65,9 @@ public function handler_conversationController_getEditControls($sender, &$contro
 	addToArrayString($controls, "bold", "<a href='javascript:BBCode.bold(\"$id\");void(0)' title='".T("Bold")."' class='bbcode-b'><span>".T("Bold")."</span></a>", 0);
 }
 
-/**
- * Add an event handler to the formatter to take out and store code blocks before formatting takes place.
- *
- * @return void
- */
-public function handler_format_beforeFormat($sender)
+public function handler_settingsController_getEditControls($sender, &$controls, $id)
 {
-        return;
-	// Block-level [fixed] tags will become <pre>.
-	$this->blockFixedContents = array();
-	$hideFixed = create_function('&$blockFixedContents, $contents', '
-		$blockFixedContents[] = $contents;
-		return "</p><pre></pre><p>";');
-	$regexp = "/(.*)^\[code(=.*)?\]\n?(.*?)\n?\[\/code]$/imse";
-	while (preg_match($regexp, $sender->content)) $sender->content = preg_replace($regexp, "'$1' . \$hideFixed(\$this->blockFixedContents, '$2')", $sender->content);
-
-	// Inline-level [fixed] tags will become <code>.
-	$this->inlineFixedContents = array();
-	$hideFixed = create_function('&$inlineFixedContents, $contents', '
-		$inlineFixedContents[] = $contents;
-		return "<code></code>";');
-	$sender->content = preg_replace("/\[code(=.*)?]\]\n?(.*?)\n?\[\/code]/ise", "\$hideFixed(\$this->inlineFixedContents, '$1')", $sender->content);
+    return $this->handler_conversationController_getEditControls($sender, $controls, $id);
 }
 
 /**
@@ -113,21 +101,6 @@ public function handler_format_format($sender)
 	$sender->content = html_entity_decode($bbcode->Parse($sender->content));
 }
 
-
-/**
- * Add an event handler to the formatter to put code blocks back in after formatting has taken place.
- *
- * @return void
- */
-public function handler_format_afterFormat($sender)
-{
-	// Retrieve the contents of the inline <code> tags from the array in which they are stored.
-	$sender->content = preg_replace("/<code><\/code>/ie", "'<code>' . array_shift(\$this->inlineFixedContents) . '</code>'", $sender->content);
-
-	// Retrieve the contents of the block <pre> tags from the array in which they are stored.
-	$sender->content = preg_replace("/<pre><\/pre>/ie", "'<pre>' . array_pop(\$this->blockFixedContents) . '</pre>'", $sender->content);
-}
-
 /**
  * Construct and process the settings form for this plugin, and return the path to the view that should be 
  * rendered.
@@ -157,8 +130,11 @@ public function settings($sender)
 		$tag  = array(
                         'active'  => true,
 			'type'    => $type,
-			'complex' => (bool)$form->getValue("tagComplex")
+			'complex' => (bool)$form->getValue("tagComplex"),
 		);
+                
+                if ((bool)$form->getValue("tagFixed"))
+                    $tag['content'] = BBCODE_VERBATIM;
 		
 		switch ($type){
                 case 0: // TAG SIMPLES
@@ -211,10 +187,13 @@ public function settings($sender)
                 if (isset($definedTags[$origName])){
                     $tag         = $definedTags[$origName];
                     $name        = $form->getValue("tagName");
-                    $complex     = $form->getValue("tagComplex");
+                    $complex     = (bool)$form->getValue("tagComplex");
                     $writeConfig = false;
 
                     if ($form->isPostBack("modifyBBC")){ // Se ocorreu uma modificação na tag
+                        if ((bool)$form->getValue("tagFixed"))
+                            $tag['content'] = BBCODE_VERBATIM;
+                        
                         $type = $tag['type'];
                         
                         switch ($type){

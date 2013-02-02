@@ -1265,12 +1265,18 @@ private function canEditPost($post, $conversation)
  * Format a post's content to be displayed.
  *
  * @param string $content The post content to format.
+ * @param boolean $bodyOnly Supress signature parse
  * @return string The formatted post content.
  */
-protected function displayPost($content)
+protected function displayPost($content, $bodyOnly)
 {
 	$words = ET::$session->get("highlight");
-	return ET::formatter()->init($content)->highlight($words)->format()->get();
+	$data  = ET::formatter()->init($content)->highlight($words)->format()->get();
+        if (!$bodyOnly){
+            $data .= "<hr class='sep'/>";
+            $data .= ET::formatter()->init(ET::$session->preference("signature"))->format()->get();
+        }
+        return $data;
 }
 
 

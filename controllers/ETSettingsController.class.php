@@ -108,6 +108,10 @@ public function general()
 	$form->addSection("avatar", T("Avatar"));
 	$form->addField("avatar", "avatar", array($this, "fieldAvatar"), array($this, "saveAvatar"));
 
+        $form->addSection("signature", T("Signature"));
+        $form->setValue("signature", ET::$session->preference("signature"));
+        $form->addField("signature", "signature", array($this, "fieldSignature"), array($this, "saveSignature"));
+        
 	// If there's more than 1 language installed, add the language section and field to the form.
 	if (count(ET::getLanguages()) > 1) {
 		$form->addSection("language", T("Forum language"));
@@ -193,6 +197,59 @@ public function fieldLanguage($form)
 	$options = array();
 	foreach (ET::getLanguages() as $language) $options[$language] = ET::$languageInfo[$language]["name"];
 	return $form->select("language", $options);
+}
+
+/**
+ * Return the HTML to render the signature field in the general settings form.
+ *
+ * @param ETForm $form The form object.
+ * @return string
+ */
+public function fieldSignature($form)
+{
+        $this->addJSFile("js/lib/jquery.autogrow.js");
+        $this->addJSFile("js/lib/jquery.charactercount.js");
+        $this->addJSFile("js/scrubber.js");
+        $this->addJSFile("js/autocomplete.js");
+        $this->addJSFile("js/conversation.js");
+        $this->addJSFile("js/characterCount.js");
+        
+        $controls = [];
+        $this->trigger("getEditControls", array(&$controls, $id));
+    
+        if (!empty($controls)) {
+		array_unshift($controls, "<span class='formattingButtons'>");
+		$controls[] = "</span>";
+		$controls[] = "<label class='previewCheckbox'><input type='checkbox' id='signature-previewCheckbox' onclick='ETConversation.togglePreview(\"signature\",this.checked,true)' accesskey='p'/> ".T("Preview")."</label>";
+	}
+        
+        $len      = C("esoTalk.signature.maxChars");
+        $this->addJSVar('charCountMax', $len);
+        $this->addJSVar('charCountSingular', T("Character Left"));
+        $this->addJSVar('charCountPlural', T("Characters Left"));
+        $this->addJSVar('charCountElem', 'signature');
+        
+        $len -= strlen(ET::$session->preference("signature"));
+        
+	// Using the provided form object, construct a textarea and buttons.
+        $body  = $form->input("signature", "textarea", array('style' => 'height: 10em'));
+        $body .= "<div id='signature-preview' class='preview'></div>";
+        $body .= "<div id='characterCount'>" . 
+                "<span id='value'>" . $len . "</span> " .
+                "<span id='text'>" . Ts("Character Left", "Characters Left", $len) . "</span>" .
+                "</div>";
+        
+        //</div>";
+        // Construct an array for use in the conversation/post view.
+        $post = array(
+            "id" => "signature",
+            "title" => T("Edit Signature"),
+            "controls" => $controls,
+            "class" => "edit",
+            "body" => $body
+        );
+
+        return $this->renderView("settings/signature", array("post" => $post));
 }
 
 
@@ -310,6 +367,37 @@ public function saveAvatar($key, $form, &$preferences)
 		$form->error($key, $e->getMessage());
 
 	}
+}
+
+/**
+ * Save the contents of the signature field when the general settings form is submitted.
+ *
+ * @param string $key The name of the field that was submitted.
+ * @param ETForm $form The form object.
+ * @param array $preferences An array of preferences to write to the database.
+ * @return void
+ */
+public function saveSignature($key, $form, &$preferences)
+{
+    $data    = $form->getValue($key);
+    $maxLen  = C("esoTalk.signature.maxChars");
+    $maxSize = C("esoTalk.signature.maxSize");
+    
+    if (strlen($data) < $maxLen){
+        /* TODO: TRATAR $data PARA VERIFICAR A PRESENÇA
+         *       DE MULTIMÍDIA E TRATAR O PESO FINAL.
+         * 
+         * Tamanho Máximo em KBs: $maxSize;
+         * Mensagem de Erro: 
+         *      sprintf(T("Signature exceeded max size (%d)"), $maxSize);
+         */
+        
+        $preferences['signature'] = $data;
+    } else {
+        $form->error($key, 
+                sprintf(T("Signature exceeded character limit (%d)"), $maxLen)
+        );
+    }
 }
 
 
