@@ -135,6 +135,9 @@ public function settings($sender)
                 
                 if ((bool)$form->getValue("tagFixed"))
                     $tag['content'] = BBCODE_VERBATIM;
+                
+                if ((bool)$form->getValue("tagOnlyOpen"))
+                            $tag['end_tag'] = $tag['content'] = BBCODE_PROHIBIT;
 		
 		switch ($type){
                 case 0: // TAG SIMPLES
@@ -193,6 +196,9 @@ public function settings($sender)
                     if ($form->isPostBack("modifyBBC")){ // Se ocorreu uma modificação na tag
                         if ((bool)$form->getValue("tagFixed"))
                             $tag['content'] = BBCODE_VERBATIM;
+                        
+                        if ((bool)$form->getValue("tagOnlyOpen"))
+                            $tag['end_tag'] = $tag['content'] = BBCODE_PROHIBIT;
                         
                         $type = $tag['type'];
                         

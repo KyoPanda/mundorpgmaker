@@ -104,18 +104,6 @@ $config["BBCode.tags"] = array (
     ),
     'mode' => 4,
   ),
-  'font' => 
-  array (
-    'type' => 1,
-    'active' => true,
-    'complex' => false,
-    'template' => '<span style="font-family: {$_default};" class="bbc_font">{$_content}</span>',
-    'allow' => 
-    array (
-      '_default' => '/[a-z0-9_,\\-\\s]+?/i',
-    ),
-    'mode' => 4,
-  ),
   'b' => 
   array (
     'type' => 0,
@@ -173,7 +161,23 @@ $config["BBCode.tags"] = array (
     'mode' => 1,
     'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9JyIuVVJMKHBvc3RVUkwoJHBvc3RJZCkpLiInIHJlbD0ncG9zdCcgZGF0YS1pZD0nJHBvc3RJZCcgY2xhc3M9J2NvbnRyb2wtc2VhcmNoIHBvc3RSZWYnPiIuVCgiRmluZCB0aGlzIHBvc3QiKS4iPC9hPiAiOw0KDQovLyBJZiB0aGVyZSBpcyBhIGNpdGF0aW9uLCBhZGQgaXQuDQppZiAoIWVtcHR5KCRjaXRhdGlvbikpew0KICAgICAgICAkcXVvdGUgLj0gIjxjaXRlPiI7DQogICAgICAgICRxdW90ZSAuPSAkY2l0YXRpb247DQogICAgICAgICRxdW90ZSAuPSAiPC9jaXRlPiI7DQp9DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50PC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
   ),
+  'size' => 
+  array (
+    'active' => true,
+    'type' => 2,
+    'complex' => false,
+    'mode' => 1,
+    'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKHByZWdfbWF0Y2goIi9eKFsxLThdP1swLTldKShwdHxweHxlbSk/JC9pIiwgJGRlZmF1bHQsICRtYXRjaGVzKSl7DQoNCiAgJHNpemUgPSAkbWF0Y2hlc1sxXTsNCiAgJG1ldHIgPSAkbWF0Y2hlc1syXSA/ICRtYXRjaGVzWzJdIDogImVtIjsNCg0KICBpZiAoJG1ldHIgPT0gImVtIiBhbmQgJHNpemUgPiA5KSAkc2l6ZSA9IDk7DQoNCiAgJGh0bWwgPSAiPHNwYW4gc3R5bGU9J2ZvbnQtc2l6ZTogIjsNCiAgJGh0bWwgLj0gIiRzaXplJG1ldHInID4kY29udGVudDwvc3Bhbj4iOw0KICByZXR1cm4gJGh0bWw7DQoNCn0gZWxzZSB7DQogIHJldHVybiAkY29udGVudDsNCn0=',
+  ),
+  'hr' => 
+  array (
+    'active' => true,
+    'type' => 0,
+    'complex' => false,
+    'simple_start' => '<hr/>',
+    'simple_end' => '',
+  ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Sat, 02 Feb 2013 19:50:25 +0100
+// Last updated by: Gab (127.0.0.1) @ Sun, 03 Feb 2013 00:03:31 +0100
 ?>

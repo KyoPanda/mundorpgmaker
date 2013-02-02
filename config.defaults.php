@@ -130,4 +130,5 @@ $config["esoTalk.avatars.thumbWidth"] = 20;
 $config["esoTalk.avatars.thumbHeight"] = 20;
 
 // Signature configuration
-$config["esoTalk.signature.maxChars"] = 2000;
+$config["esoTalk.signature.maxChars"] = 2000; // Maximum signature characters
+$config["esoTalk.signature.maxSize"]  = 80 * 1024; // Max signature size

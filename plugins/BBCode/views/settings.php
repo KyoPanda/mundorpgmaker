@@ -46,19 +46,22 @@ $form = $data["pluginSettingsForm"];
 			<fieldset class='simple area' style="display: block">
 				<label>Nome da Tag</label>
 				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
-					
+				
+                                <label>Tag complexa?</label>
+				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text', 'value' => '')); ?>
+				
+                                <label>Conteúdo Fixo?</label>
+				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
+                                
+                                <label>Apenas abertura?</label>
+				<?php echo $form->input("tagOnlyOpen", "checkbox", array('class' => 'text', 'value' => '')); ?>
+                                
 				<label>Substituição Inicial</label>
 				<?php echo $form->input("tagStart", "text", array('value' => '')); ?>
 					
 				<label>Substituição Final</label>
 				<?php echo $form->input("tagEnd", "text", array('value' => '')); ?>
 				
-				<label>Tag complexa?</label>
-				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text', 'value' => '')); ?>
-				
-                                <label>Conteúdo Fixo?</label>
-				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
-                                
 				<li class='sep'></li>
 				<?php echo $form->button("createBBC", T("Create BBCode"), array("class" => "big submit")); ?>
 			</fieldset>
@@ -69,12 +72,14 @@ $form = $data["pluginSettingsForm"];
 			<fieldset class='enhanced area'>
 				<label>Nome da Tag</label>
 				<?php echo $form->input("tagName", "text", array('value' => '')); ?>
-				<label>Template</label>
-				<?php echo $form->input("tagTemplate", "text", array('value' => '')); ?>
-				<label>Tag complexa?</label>
+                                <label>Tag complexa?</label>
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
                                 <label>Conteúdo Fixo?</label>
 				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
+                                <label>Apenas abertura?</label>
+				<?php echo $form->input("tagOnlyOpen", "checkbox", array('class' => 'text', 'value' => '')); ?>
+				<label>Template</label>
+				<?php echo $form->input("tagTemplate", "text", array('value' => '')); ?>
 				<li class='sep'></li>
 				<label>Atributos</label>
 				<ol id="AttrList">
@@ -94,7 +99,9 @@ $form = $data["pluginSettingsForm"];
 				<?php echo $form->input("tagComplex", "checkbox", array('class' => 'text')); ?>
                                 <label>Conteúdo Fixo?</label>
 				<?php echo $form->input("tagFixed", "checkbox", array('class' => 'text', 'value' => '')); ?>
-				<li class='sep'></li>
+                                <label>Apenas abertura?</label>
+				<?php echo $form->input("tagOnlyOpen", "checkbox", array('class' => 'text', 'value' => '')); ?>
+                                <li class='sep'></li>
 				<label style='width:100%'>Função de validação</label>
 				<span class='desc'><strong>Argumentos:</strong> $bbcode, $action, $name, $default, $params, $content</span>
 				<?php echo $form->input("tagFunction", "textarea", array('id' => 'tagCode', 'value' => '')); ?>

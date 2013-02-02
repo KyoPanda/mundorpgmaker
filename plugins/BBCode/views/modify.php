@@ -33,7 +33,14 @@ $bbc  = $data["bbcode"];
         
         echo $form->checkbox("tagFixed", $fixedParams); 
     ?><br/>
-
+    <label>Apenas abertura?</label>
+    <?php 
+        $onlyOpenParams = array('class' => 'text');
+        if ($bbc['content'] == BBCODE_PROHIBIT) $onlyOpenParams['checked'] = '';
+        
+        echo $form->checkbox("tagOnlyOpen", $onlyOpenParams); 
+    ?><br/>
+    
     <li class='sep'></li>
     
     <?php 
