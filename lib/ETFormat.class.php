@@ -271,11 +271,10 @@ public function mentions()
  */
 public function getMentions($content)
 {
-        $matches = [];
+  $matches = array();
 	preg_match_all('/(^|[\s,\.:])@(\w{3,20})\b/i', $content, $matches, PREG_SET_ORDER);
 	$names = array();
-        foreach ($matches as $v) $names[] = $v[2];
-
+  foreach ($matches as $v) $names[] = $v[2];
 	return $names;
 }
 
