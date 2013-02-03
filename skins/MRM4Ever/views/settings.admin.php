@@ -19,6 +19,10 @@ $form = $data["skinSettingsForm"];
 
 <li class='sep'></li>
 
+<h3>Aparência do fórum</h3>
+
+<li class='sep'></li>
+
 <li id='headerColor'>
 <label>Cor do cabeçalho</label>
 <?php echo $form->input("headerColor", "text", array("class" => "color")); ?> <a href='#' class='reset'>Resetar</a>
@@ -66,6 +70,22 @@ $form = $data["skinSettingsForm"];
 	<ul>
 		<a href="javascript:void(0)" id="AddMenuField">[Adicionar Campo]</a>
 	</ul>
+</li>
+
+<li class='sep'></li>
+
+<h3>Configurações adicionais</h3>
+
+<li class='sep'></li>
+
+<li id='avatarWidth'>
+<label>Largura do Avatar</label>
+<?php echo $form->input("avatarWidth", "text", array("class" => "number")); ?>
+</li>
+
+<li id='avatarHeight'>
+<label>Altura do Avatar</label>
+<?php echo $form->input("avatarHeight", "text", array("class" => "number")); ?>
 </li>
 
 <li class='sep'></li>

@@ -33,6 +33,6 @@ $post = array(
 	"avatar" => avatar(ET::$session->userId, ET::$session->user["avatarFormat"])
 );
 
-$this->renderView("conversation/post", array("post" => $post));
+$this->renderView("conversation/post-reply", array("post" => $post));
 
 ?>

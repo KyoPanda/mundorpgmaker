@@ -10,11 +10,11 @@ $config["esoTalk.forumTitle"] = 'Mundo RPG Maker';
 $config["esoTalk.baseURL"] = 'http://localhost/esotalk/';
 $config["esoTalk.emailFrom"] = 'do_not_reply@localhost';
 $config["esoTalk.cookie.name"] = 'Mundo_RPG_Maker';
-$config["esoTalk.urls.friendly"] = true;
+$config["esoTalk.urls.friendly"] = false;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1358874479;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1359876302;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -153,6 +153,8 @@ $config["BBCode.tags"] = array (
     'methodBody' => 'aWYgKCRhY3Rpb24gPT0gQkJDT0RFX0NIRUNLKSByZXR1cm4gdHJ1ZTsNCg0KaWYgKCRkZWZhdWx0IGFuZCBzdHJwb3MoJGRlZmF1bHQsICI6IikgIT09IGZhbHNlKQ0KCWxpc3QoJHBvc3RJZCwgJGNpdGF0aW9uKSA9IGV4cGxvZGUoIjoiLCAkZGVmYXVsdCk7DQoNCiRxdW90ZSA9ICI8YmxvY2txdW90ZT48cD4iOw0KDQppZiAoIWVtcHR5KCRwb3N0SWQpKSAkcXVvdGUgLj0gIjxhIGhyZWY9JyIuVVJMKHBvc3RVUkwoJHBvc3RJZCkpLiInIHJlbD0ncG9zdCcgZGF0YS1pZD0nJHBvc3RJZCcgY2xhc3M9J2NvbnRyb2wtc2VhcmNoIHBvc3RSZWYnPiIuVCgiRmluZCB0aGlzIHBvc3QiKS4iPC9hPiAiOw0KDQovLyBJZiB0aGVyZSBpcyBhIGNpdGF0aW9uLCBhZGQgaXQuDQppZiAoIWVtcHR5KCRjaXRhdGlvbikpew0KICAgICAgICAkcXVvdGUgLj0gIjxjaXRlPiI7DQogICAgICAgICRxdW90ZSAuPSBiYXNlNjRfZGVjb2RlKCRjaXRhdGlvbik7DQogICAgICAgICRxdW90ZSAuPSAiPC9jaXRlPiI7DQp9DQoNCi8vIEZpbmlzaCBjb25zdHJ1Y3RpbmcgYW5kIHJldHVybiB0aGUgcXVvdGUuDQokcXVvdGUgLj0gIiRjb250ZW50PC9wPjwvYmxvY2txdW90ZT4iOw0KcmV0dXJuICRxdW90ZTs=',
   ),
 );
+$config["skin.MRM4Ever.avatarWidth"] = '140';
+$config["skin.MRM4Ever.avatarHeight"] = '300';
 
-// Last updated by: Gab (127.0.0.1) @ Tue, 22 Jan 2013 21:06:38 +0100
+// Last updated by: Madajuv (::1) @ Sun, 03 Feb 2013 07:25:11 +0000
 ?>

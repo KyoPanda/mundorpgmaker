@@ -87,6 +87,7 @@ p, ul, pre {line-height:1.5em}
 input.text, textarea {background:#fff; border:#bbb 1px solid; padding:3px; border-radius:3px; vertical-align:-1px; margin:0}
 input.text:focus, textarea:focus {border-color:#999; outline:0; -webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.15); box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.15)}
 input.menuLabel{width: 100px !important}
+input.number{width: 64px !important}
 
 /* File Input */
 .bodyImageFile {
@@ -110,3 +111,8 @@ input.menuLabel{width: 100px !important}
 blockquote cite {
     font-weight:normal !important;
 }
+
+.post .thing {margin-left: 12px;}
+
+/* Wrapper para o postador */
+.poster { float: left; background: none repeat scroll 0 0 #EDF1FA; border:1px solid #D6E0F4; border-width:1px; border-style:solid; border-radius:3px; text-align: center; padding: 7px; overflow: hidden;}

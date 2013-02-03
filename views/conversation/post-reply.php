@@ -19,14 +19,7 @@ foreach ((array)$post["data"] as $dk => $dv)
 	echo " data-$dk='$dv'";
 endif; ?>>
 
-<div class='poster'>
-<h3><?php echo $post["title"]; ?></h3>
-<?php if (!empty($post["avatar"])): ?>
-<div class='avatar'><?php echo $post["avatar"]; ?></div>
-<?php endif; ?>
-</div>
-
-<div class='postContent thing'>
+<div class='thing'>
 
 <div class='postHeader'>
 <div class='info'>

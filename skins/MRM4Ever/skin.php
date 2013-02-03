@@ -31,7 +31,7 @@ class ETSkin_MRM4Ever extends ETSkin {
  */
 public function handler_init($sender)
 {
-	$sender->addCSSFile("skins/base/base.css", true);
+	$sender->addCSSFile($this->getResource("base.css"), true);
 	$sender->addCSSFile($this->getResource("styles.css"), true);
 
 	// If we're viewing from a mobile browser, add the mobile CSS and change the master view.
@@ -94,6 +94,20 @@ public function handler_init($sender)
 	// Do we want this background image to not repeat?
 	if ($img and C("skin.MRM4Ever.noRepeat"))
 		$styles[] = "body {background-repeat:no-repeat}";
+    
+  // If a custom body background image has been set...
+	if ($img = C("skin.MRM4Ever.bodyImage"))
+		$styles[] = "body {background-image:url(".getWebPath($img)."); background-position:top center}";
+    
+  // Altura e largura do avatar
+  $ava_width = C("skin.MRM4Ever.avatarWidth");
+  $ava_height = C("skin.MRM4Ever.avatarHeight");
+  if ($ava_width && $ava_height) {
+    $styles[] = "div.avatar { height: " . $ava_height . "px; width: " . $ava_width . "px;}
+                 img.avatar { max-height: " . $ava_height . "px; max-width: " . $ava_width . "px; overflow: auto; }
+                 .post {padding-left:" . ($ava_width + 14) . "px;}
+                 .poster {margin-left:-" . ($ava_width + 14) . "px;}";
+  }
 
 	// If we have any custom styles at all, add them to the page head.
 	if (count($styles)) $sender->addToHead("<style type='text/css'>\n".implode("\n", $styles)."\n</style>");
@@ -114,6 +128,8 @@ public function settings($sender)
 	$form->action = URL("admin/appearance");
 	$form->setValue("headerColor", C("skin.MRM4Ever.headerColor"));
 	$form->setValue("bodyColor", C("skin.MRM4Ever.bodyColor"));
+  $form->setValue("avatarWidth", C("skin.MRM4Ever.avatarWidth"));
+  $form->setValue("avatarHeight", C("skin.MRM4Ever.avatarHeight"));
 	$form->setValue("noRepeat", (bool)C("skin.MRM4Ever.noRepeat"));
 	$form->setValue("bodyImage", (bool)C("skin.MRM4Ever.bodyImage"));
 	$form->setValue("menuLabel", C("skin.MRM4Ever.menuLabel"));
@@ -125,6 +141,22 @@ public function settings($sender)
 		$config = array();
 		$config["skin.MRM4Ever.headerColor"] = $form->getValue("headerColor");
 		$config["skin.MRM4Ever.bodyColor"] = $form->getValue("bodyColor");
+    
+    // Pegar largura e altura do avatar
+    $ava_width = $form->getValue("avatarWidth");
+    $ava_height = $form->getValue("avatarHeight");
+    
+    // Validar altura e largura do avatar
+    if (!is_numeric($ava_width)) {
+      $form->error("avatarWidth", "A largura do avatar deve ser um valor num&eacute;rico!");
+    }
+    if (!is_numeric($ava_height)) {
+      $form->error("avatarHeight", "A altura do avatar deve ser um valor num&eacute;rico!");
+    }
+    if (is_numeric($ava_width) && is_numeric($ava_height)) {
+      $config["skin.MRM4Ever.avatarWidth"] = $ava_width;
+      $config["skin.MRM4Ever.avatarHeight"] = $ava_height;
+    }
 		
 		// Upload a body bg image if necessary.
 		if ($form->getValue("bodyImage") and !empty($_FILES["bodyImageFile"]["tmp_name"])) 
