@@ -23,7 +23,7 @@ endif; ?>>
 <div class='avatar'<?php if (!empty($post["hideAvatar"])): ?> style='display:none'<?php endif; ?>><?php echo $post["avatar"]; ?></div>
 <?php endif; ?>
 
-<div class='postContent thing'>
+<div class='postContent thing <?php if (isset($post['approved']) && !$post['approved']) echo 'notApproved' ?>'>
 
 <div class='postHeader'>
 <div class='info'>
@@ -40,7 +40,11 @@ endif; ?>>
 <?php echo $post["body"]; ?>
 </div>
 <?php endif; ?>
-
+    
+<?php if ($post["signature"]): ?>
+    <hr class='sep'/>
+    <?php echo $post["signature"]; ?>
+<?php endif; ?>
 </div>
 
 </div>

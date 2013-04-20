@@ -28,6 +28,12 @@ public function index($conversationId = false, $year = false, $month = false)
 	// Get the conversation.
 	$conversation = ET::conversationModel()->getById((int)$conversationId);
 
+        // If the conversation isn't visible
+	if (!ET::conversationModel()->userCanSee($conversation['conversationId'])) {
+		$this->render404(T("message.conversationNotFound"));
+		return;
+	}
+        
 	// Stop here with a 404 header if the conversation wasn't found.
 	if (!$conversation) {
 		$this->render404(T("message.conversationNotFound"));
@@ -274,6 +280,8 @@ public function index($conversationId = false, $year = false, $month = false)
 		}
 
 		// Set up the reply form.
+                
+                
 		$replyForm = ETFactory::make("form");
 		$replyForm->action = URL("conversation/reply/".$conversation["conversationId"]);
 		$replyForm->setValue("content", $conversation["draft"]);
@@ -415,6 +423,7 @@ public function start($member = false)
  */
 public function post($postId = false)
 {
+    
 	// Construct a subquery that will find the position of a post within its conversation.
 	$subquery = ET::SQL()
 		->select("COUNT(postId)")
@@ -1176,17 +1185,20 @@ protected function formatPostForTemplate($post, $conversation)
 		"id" => "p".$post["postId"],
 		"title" => memberLink($post["memberId"], $post["username"]),
 		"avatar" => (!$post["deleteMemberId"] and $avatar) ? "<a href='".URL(memberURL($post["memberId"], $post["username"]))."'>$avatar</a>" : false,
+                "signature" => $post["deleteMemberId"] ? false : $this->displaySignature($post["memberId"]),
 		"class" => $post["deleteMemberId"] ? array("deleted") : array(),
 		"info" => array(),
 		"controls" => array(),
 		"body" => !$post["deleteMemberId"] ? $this->displayPost($post["content"]) : false,
-
+                
 		"data" => array(
 			"id" => $post["postId"],
 			"memberid" => $post["memberId"]
-		)
+		),
+            
+                'approved' => $post['approved']
 	);
-
+        
 	// If the post was within the last 24 hours, show a relative time (eg. 2 hours ago.)
 	if (time() - $post["time"] < 24 * 60 * 60)
 		$date = relativeTime($post["time"], true);
@@ -1212,13 +1224,19 @@ protected function formatPostForTemplate($post, $conversation)
 		// If the post has been edited, show the time and by whom next to the controls.
 		if ($post["editMemberId"]) $formatted["controls"][] = "<span class='editedBy'>".sprintf(T("Edited %s by %s"), "<span title='".date(T("date.full"), $post["editTime"])."'>".relativeTime($post["editTime"], true)."</span>", $post["editMemberName"])."</span>";
 
+                // Warning Controls
+                $formatted["controls"][] = "<a href='".URL("moderation/report/".$post["postId"]). "' title='".T("Report")."' class='control-report'>".T("Report")."</a>";
+                
+                if (ET::$session->isModerator($conversation['channelId']) && !$post['approved'])
+                    $formatted['controls'][] = "<a href='".URL("moderation/approve/".$post["postId"]."?token=".ET::$session->token). "' title='".T("Approve")."' class='control-approve'>".T("Approve")."</a>";
+                
 		// If the user can reply, add a quote control.
 		if ($conversation["canReply"])
 			$formatted["controls"][] = "<a href='".URL(conversationURL($conversation["conversationId"], $conversation["title"])."/?quote=".$post["postId"]."#reply")."' title='".T("Quote")."' class='control-quote'>".T("Quote")."</a>";
 
 		// If the user can edit the post, add edit/delete controls.
 		if ($canEdit) {
-			$formatted["controls"][] = "<a href='".URL("conversation/editPost/".$post["postId"])."' title='".T("Edit")."' class='control-edit'>".T("Edit")."</a>";
+                        $formatted["controls"][] = "<a href='".URL("conversation/editPost/".$post["postId"])."' title='".T("Edit")."' class='control-edit'>".T("Edit")."</a>";
 			$formatted["controls"][] = "<a href='".URL("conversation/deletePost/".$post["postId"]."?token=".ET::$session->token)."' title='".T("Delete")."' class='control-delete'>".T("Delete")."</a>";
 		}
 
@@ -1265,18 +1283,29 @@ private function canEditPost($post, $conversation)
  * Format a post's content to be displayed.
  *
  * @param string $content The post content to format.
- * @param boolean $bodyOnly Supress signature parse
  * @return string The formatted post content.
  */
-protected function displayPost($content, $bodyOnly)
+protected function displayPost($content)
 {
 	$words = ET::$session->get("highlight");
-	$data  = ET::formatter()->init($content)->highlight($words)->format()->get();
-        if (!$bodyOnly){
-            $data .= "<hr class='sep'/>";
-            $data .= ET::formatter()->init(ET::$session->preference("signature"))->format()->get();
-        }
-        return $data;
+	return ET::formatter()->init($content)->highlight($words)->format()->get();
+}
+
+/**
+ * Display signature contents from member
+ *
+ * @param string $memberId Id from member.
+ * @return bool|string The formatted signature content or false if user do not exist or signature is empty.
+ */
+protected function displaySignature($memberId)
+{
+    $member   = ET::memberModel()->getById($memberId);
+    if (!$member or empty($member["signature"])) return false;
+    
+    $data  = "<div class='postSignature'>";
+    $data .= ET::formatter()->init($member["signature"])->format()->get();
+    $data .= "</div>";
+    return $data;
 }
 
 
@@ -1343,7 +1372,7 @@ protected function getConversation($id, $post = false)
 		$this->render404(T("message.conversationNotFound"));
 		return false;
 	}
-
+        
 	return $conversation;
 }
 

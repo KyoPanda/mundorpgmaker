@@ -333,8 +333,12 @@ public function update($channelSlug = "", $query = "")
 	// Get the full result data for these conversations, and construct an array of rendered conversation rows.
 	$results = ET::searchModel()->getResults($conversationIds, true);
 	$rows = array();
-	foreach ($results as $conversation) {
-		$rows[$conversation["conversationId"]] = $this->getViewContents("conversations/conversation", array("conversation" => $conversation, "channelInfo" => $channelInfo));
+	foreach ($results as &$conversation) {
+            $result = ET::conversationModel()->userCanSee($conversation['conversationId'], true);
+            $conversation['unapproved'] = $result['unapproved'];
+    
+            if ($result['canSee'])    
+                $rows[$conversation["conversationId"]] = $this->getViewContents("conversations/conversation", array("conversation" => $conversation, "channelInfo" => $channelInfo));
 	}
 
 	// Add that to the response.

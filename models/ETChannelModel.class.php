@@ -117,12 +117,16 @@ public function get($permission = "view")
 {
 	$channels = $this->getAll();
 
+        $unapprovedPostChannels = ET::warnModel()->unapprovedPostChannels();
+        
 	// Go through each of the channels and remove ones that the user doesn't have this permission for.
 	$groupModel = ET::groupModel();
 	$groupIds = ET::$session->getGroupIds();
 	foreach ($channels as $k => $channel) {
-		if (!$groupModel->groupIdsAllowedInGroupIds($groupIds, $channel["permissions"][$permission], true))
-			unset($channels[$k]);
+            $channels[$k]['hasUnapproved'] = array_key_exists($channel['channelId'], $unapprovedPostChannels);
+                
+            if (!$groupModel->groupIdsAllowedInGroupIds($groupIds, $channel["permissions"][$permission], true))
+		unset($channels[$k]);
 	}
 
 	// Add user data (eg. unsubscribed) into the channel array.

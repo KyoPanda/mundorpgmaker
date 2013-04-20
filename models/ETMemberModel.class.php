@@ -128,21 +128,36 @@ public function update($values, $wheres = array())
 
 
 /**
+ * Prepare SQL Query to insert commands after getWithSQL commands
+ * 
+ * @param ETSQLQuery $sql SQL object to be prepared
+ * @return ETSQLQuery Prepared SQL
+ */
+public function prepareSQL($sql = false) {
+    if (!$sql) $sql = ET::SQL();
+    $sql->select("m.*")
+        ->select("GROUP_CONCAT(g.groupId) AS groups")
+        ->select("GROUP_CONCAT(g.name) AS groupNames")
+        ->select("BIT_OR(g.canSuspend) AS canSuspend")
+        ->select("BIT_OR(g.canWarn) AS canWarn")
+        ->from("member m")
+        ->from("member_group mg", "mg.memberId=m.memberId", "left")
+        ->from("group g", "g.groupId=mg.groupId", "left")
+        ->groupBy("m.memberId");
+    
+    return $sql;
+}
+
+/**
  * Get standardized member data given an SQL query (which can specify WHERE conditions, for example.)
  *
  * @param ETSQLQuery $sql The SQL query to use as a basis.
+ * @param bool $needPrepare SQL need to be prepared?
  * @return array An array of members and their details.
  */
-public function getWithSQL($sql)
+public function getWithSQL($sql, $needPrepare = true)
 {
-	$sql->select("m.*")
-		->select("GROUP_CONCAT(g.groupId) AS groups")
-		->select("GROUP_CONCAT(g.name) AS groupNames")
-		->select("BIT_OR(g.canSuspend) AS canSuspend")
-		->from("member m")
-		->from("member_group mg", "mg.memberId=m.memberId", "left")
-		->from("group g", "g.groupId=mg.groupId", "left")
-		->groupBy("m.memberId");
+        if ($needPrepare) $this->prepareSQL ($sql);
 
 	$members = $sql->exec()->allRows();
 
@@ -350,6 +365,36 @@ public function canSuspend($member)
 	and $member["memberId"] != C("esoTalk.rootAdmin") and $member["memberId"] != ET::$session->userId;
 }
 
+/**
+ * Returns whether or not the current user can give warn or remove it from a member.
+ * 
+ * @return bool
+ */
+public function canWarn($member) {
+        return 
+        (
+            ET::$session->isAdmin() 
+            or (ET::$session->user["canWarn"])
+        )
+        and $member["memberId"] != C("esoTalk.rootAdmin") and $member["memberId"] != ET::$session->userId;
+}
+
+/**
+ * Return whether or not the user can post and if it will need aprovation
+ * 
+ * @param int $memberId Member Id
+ * @return int 0 = User can post // 1 = Post will need aprovation // 2 = Muted
+ */
+public function getState($memberId)
+{
+    $warnLevels = C("esoTalk.warnLevels");
+    $memberWarn = ET::warnModel()->getTotalWarnPoints($memberId);
+    
+    for ($i = 3; $i >= 1; $i--)
+        if ($memberWarn >= $warnLevels[$i][0]) return ($i - 1);
+    
+    return 0;
+}
 
 /**
  * Set a member's account and groups.
@@ -416,7 +461,6 @@ public function setPreferences($member, $preferences)
 
 	return $preferences;
 }
-
 
 /**
  * Delete a member with the specified ID, along with all of their associated records.
@@ -511,11 +555,14 @@ public static function addLastActionType($type, $callback)
  * @param int $time The member's lastActionTime field.
  * @param string $action The member's lastActionDetail field.
  */
-public static function getLastActionInfo($time, $action)
+public static function getLastActionInfo($time, $action, $checkTime=true)
 {
-	// If there is no action, or the time passed since the user was last seen is too great, then return no info.
-	if (!$action or $time < time() - C("esoTalk.userOnlineExpire"))
-		return false;
+        // If there is no action, or the time passed since the user was last seen is too great, then return no info.
+	if (!$action)
+            return false;
+        
+        if ($checkTime and ($time < time() - C("esoTalk.userOnlineExpire")))
+            return false;
 
 	$data = unserialize($action);
 	if (!isset($data["type"])) return false;

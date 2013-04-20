@@ -46,6 +46,7 @@ public function handler_init($sender)
 	// If custom colors have been set in this skin's settings, add some CSS to the page.
 	$styles = array();
 
+        /*
 	// If a custom header color has been set...
 	if ($c = C("skin.MRM4Ever.headerColor")) {
 		$styles[] = "#hdr, #navigationMenu {background-color:$c}";
@@ -71,10 +72,18 @@ public function handler_init($sender)
 		$b = colorPack(hsl2rgb($hsl), true);
 		$styles[] = "#body-content, #navigationMenu {border-color:$b}";
 	}
-
-	// Menu de opções 2
+         * 
+         * // If a custom body background image has been set...
+	if ($img = C("skin.MRM4Ever.bodyImage"))
+		$styles[] = "body {background-image:url(".getWebPath($img)."); background-position:top center}";
+	
+	// Do we want this background image to not repeat?
+	if ($img and C("skin.MRM4Ever.noRepeat"))
+		$styles[] = "body {background-repeat:no-repeat}";
+        */
+        
+	// Menu de opÃ§Ãµes 2
 	$menu = ETFactory::make("menu");
-	//$menu->add($id, $html, $position);
 	$labels = C("skin.MRM4Ever.menuLabel");
 	$urls   = C("skin.MRM4Ever.menuURL");
 	foreach ($labels as $key => $label){
@@ -86,14 +95,6 @@ public function handler_init($sender)
 	// Logo Image
 	// TODO: Verificar data e atualizar logo automaticamente para datas comemorativas
 	$sender->data("logoURL", $this->getResource('logo.png'));
-	
-	// If a custom body background image has been set...
-	if ($img = C("skin.MRM4Ever.bodyImage"))
-		$styles[] = "body {background-image:url(".getWebPath($img)."); background-position:top center}";
-	
-	// Do we want this background image to not repeat?
-	if ($img and C("skin.MRM4Ever.noRepeat"))
-		$styles[] = "body {background-repeat:no-repeat}";
 
 	// If we have any custom styles at all, add them to the page head.
 	if (count($styles)) $sender->addToHead("<style type='text/css'>\n".implode("\n", $styles)."\n</style>");
@@ -112,10 +113,6 @@ public function settings($sender)
 	// Set up the settings form.
 	$form = ETFactory::make("form");
 	$form->action = URL("admin/appearance");
-	$form->setValue("headerColor", C("skin.MRM4Ever.headerColor"));
-	$form->setValue("bodyColor", C("skin.MRM4Ever.bodyColor"));
-	$form->setValue("noRepeat", (bool)C("skin.MRM4Ever.noRepeat"));
-	$form->setValue("bodyImage", (bool)C("skin.MRM4Ever.bodyImage"));
 	$form->setValue("menuLabel", C("skin.MRM4Ever.menuLabel"));
 	$form->setValue("menuURL",  C("skin.MRM4Ever.menuURL"));
 
@@ -123,16 +120,8 @@ public function settings($sender)
 	if ($form->validPostBack("save")) {		
 		// Construct an array of config options to write.
 		$config = array();
-		$config["skin.MRM4Ever.headerColor"] = $form->getValue("headerColor");
-		$config["skin.MRM4Ever.bodyColor"] = $form->getValue("bodyColor");
-		
-		// Upload a body bg image if necessary.
-		if ($form->getValue("bodyImage") and !empty($_FILES["bodyImageFile"]["tmp_name"])) 
-			$config["skin.MRM4Ever.bodyImage"] = $this->uploadBackgroundImage($form);
-		elseif (!$form->getValue("bodyImage")) $config["skin.MRM4Ever.bodyImage"] = false;
-			$config["skin.MRM4Ever.noRepeat"] = (bool)$form->getValue("noRepeat");
-
-		// Processa itens do menu
+	
+                // Processa itens do menu
 		$config["skin.MRM4Ever.menuLabel"] = array();
 		$config["skin.MRM4Ever.menuURL"]   = array();
 		
@@ -157,8 +146,8 @@ public function settings($sender)
 	}
 
 	$sender->data("skinSettingsForm", $form);
-	$sender->addCSSFile("js/lib/farbtastic/farbtastic.css");
-	$sender->addJSFile("js/lib/farbtastic/farbtastic.js");
+	//$sender->addCSSFile("js/lib/farbtastic/farbtastic.css");
+	//$sender->addJSFile("js/lib/farbtastic/farbtastic.js");
 	return $this->getView("settings.admin");
 }
 

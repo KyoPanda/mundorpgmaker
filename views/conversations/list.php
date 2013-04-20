@@ -15,7 +15,14 @@ if (!defined("IN_ESOTALK")) exit;
 <?php
 // Loop through the conversations and output a table row for each one.
 foreach ($data["results"] as $conversation):
-$this->renderView("conversations/conversation", $data + array("conversation" => $conversation));
+    
+    // Não renderiza se o primeiro post não for aprovado e se o usuário não é
+    // um moderador.
+    $result = ET::conversationModel()->userCanSee($conversation['conversationId'], true);
+    $conversation['unapproved'] = $result['unapproved'];
+    
+    if ($result['canSee'])
+        $this->renderView("conversations/conversation", $data + array("conversation" => $conversation));
 endforeach;
 
 ?></ul>

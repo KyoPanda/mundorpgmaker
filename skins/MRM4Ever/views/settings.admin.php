@@ -19,32 +19,6 @@ $form = $data["skinSettingsForm"];
 
 <li class='sep'></li>
 
-<li id='headerColor'>
-<label>Cor do cabeçalho</label>
-<?php echo $form->input("headerColor", "text", array("class" => "color")); ?> <a href='#' class='reset'>Resetar</a>
-</li>
-
-
-<li id='bodyColor'>
-<label>Cor de fundo</label>
-<?php echo $form->input("bodyColor", "text", array("class" => "color")); ?> <a href='#' class='reset'>Resetar</a>
-</li>
-
-<li class='sep'></li>
-
-<li id='bodyImage'>
-<label>Imagem de Fundo</label>
-<div class='checkboxGroup'>
-<label class='checkbox'><?php echo $form->checkbox("bodyImage"); ?> Usar imagem de fundo</label>
-<div class='indent'>
-<?php echo $form->input("bodyImageFile", "file", array("class" => "bodyImageFile text")); ?>
-<label class='checkbox'><?php echo $form->checkbox("noRepeat"); ?> Não repetir</label>
-</div>
-</div>
-</li>
-
-<li class='sep'></li>
-
 <li id="menuItems">
 	<label>Itens do menu</label>
 	<ul id="menuFields" style="list-style-type:decimal">

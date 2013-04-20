@@ -421,6 +421,16 @@ public static function activityModel()
 	return self::getInstance("activityModel");
 }
 
+public static function reportModel()
+{
+        return self::getInstance("reportModel");
+}
+
+public static function warnModel()
+{
+        return self::getInstance("warnModel");
+}
+
 public static function formatter()
 {
 	return self::getInstance("format");

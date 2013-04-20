@@ -53,7 +53,8 @@ public function edit($groupId = "")
 
 		$data = array(
 			"name" => $form->getValue("name"),
-			"canSuspend" => $form->getValue("canSuspend")
+			"canSuspend" => $form->getValue("canSuspend"),
+                        "canWarn" => $form->getValue("canWarn")
 		);
 
 		$model = ET::groupModel();
@@ -91,7 +92,8 @@ public function create()
 
 		$data = array(
 			"name" => $form->getValue("name"),
-			"canSuspend" => $form->getValue("canSuspend")
+			"canSuspend" => $form->getValue("canSuspend"),
+                        "canWarn" => $form->getValue("canWarn")
 		);
 
 		$model = ET::groupModel();

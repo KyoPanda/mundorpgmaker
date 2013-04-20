@@ -402,7 +402,7 @@ showSheet: function(id, content, callback) {
 	ETSheet.sheetStack.push(id);
 
 	// Position the page wrapper so that the browser scrollbars will no longer affect it. The browser scrollbars will become connected to the sheet content.
-	$("#wrapper").addClass("sheetActive").css({position: "fixed", top: -$(document).scrollTop(), width: "100%"});
+	$("#hdr").addClass("sheetActive").css({position: "fixed", top: -$(document).scrollTop(), width: "100%"});
 
 	// Position the sheet.
 	sheet.addClass("active").css({position: "absolute", left: "50%", marginLeft: -sheet.width() / 2});
@@ -446,8 +446,8 @@ hideSheet: function(id, callback) {
 
 	// If there are no sheets left on the stack, hide the overlay, put the wrapper position back to normal, and unbind the body "escape" key.
 	else {
-		var scrollTop = -parseInt($("#wrapper").css("top"));
-		$("#wrapper").removeClass("sheetActive").css({position: "", top: 0, width: "auto"});
+		var scrollTop = -parseInt($("#hdr").css("top"));
+		$("#hdr").removeClass("sheetActive").css({position: "", top: 0, width: "auto"});
 		$.scrollTo(scrollTop);
 
 		$(".sheetOverlay").remove();

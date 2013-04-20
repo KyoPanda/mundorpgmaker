@@ -12,8 +12,11 @@ if (!defined("IN_ESOTALK")) exit;
 
 $prevPost = null;
 
-foreach ($data["posts"] as $k => $post):
+$canSee = ET::conversationModel()->userCanSee((int)$data["conversation"]["conversationId"], true)['unapproved'];
 
+foreach ($data["posts"] as $k => $post):
+    if ((!((int)$post['approved'])) && (!$canSee)) continue;
+    
 // Format the post for the template.
 $formattedPost = $this->formatPostForTemplate($post, $data["conversation"]);
 

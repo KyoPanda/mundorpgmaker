@@ -109,7 +109,7 @@ public function general()
 	$form->addField("avatar", "avatar", array($this, "fieldAvatar"), array($this, "saveAvatar"));
 
         $form->addSection("signature", T("Signature"));
-        $form->setValue("signature", ET::$session->preference("signature"));
+        $form->setValue("signature", $member["signature"]);
         $form->addField("signature", "signature", array($this, "fieldSignature"), array($this, "saveSignature"));
         
 	// If there's more than 1 language installed, add the language section and field to the form.
@@ -220,7 +220,7 @@ public function fieldSignature($form)
         if (!empty($controls)) {
 		array_unshift($controls, "<span class='formattingButtons'>");
 		$controls[] = "</span>";
-		$controls[] = "<label class='previewCheckbox'><input type='checkbox' id='signature-previewCheckbox' onclick='ETConversation.togglePreview(\"signature\",this.checked,true)' accesskey='p'/> ".T("Preview")."</label>";
+		$controls[] = "<label class='previewCheckbox'><input type='checkbox' id='signature-previewCheckbox' onclick='ETConversation.togglePreview(\"signature\",this.checked)' accesskey='p'/> ".T("Preview")."</label>";
 	}
         
         $len      = C("esoTalk.signature.maxChars");
@@ -229,7 +229,8 @@ public function fieldSignature($form)
         $this->addJSVar('charCountPlural', T("Characters Left"));
         $this->addJSVar('charCountElem', 'signature');
         
-        $len -= strlen(ET::$session->preference("signature"));
+        $member = $this->profile("general");
+        $len -= strlen($member["signature"]);
         
 	// Using the provided form object, construct a textarea and buttons.
         $body  = $form->input("signature", "textarea", array('style' => 'height: 10em'));
@@ -239,7 +240,6 @@ public function fieldSignature($form)
                 "<span id='text'>" . Ts("Character Left", "Characters Left", $len) . "</span>" .
                 "</div>";
         
-        //</div>";
         // Construct an array for use in the conversation/post view.
         $post = array(
             "id" => "signature",
@@ -391,8 +391,8 @@ public function saveSignature($key, $form, &$preferences)
          * Mensagem de Erro: 
          *      sprintf(T("Signature exceeded max size (%d)"), $maxSize);
          */
-        
-        $preferences['signature'] = $data;
+        $memberId = ET::$session->userId;
+        ET::memberModel()->updateById($memberId, array('signature' => $data));
     } else {
         $form->error($key, 
                 sprintf(T("Signature exceeded character limit (%d)"), $maxLen)

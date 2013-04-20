@@ -393,6 +393,37 @@ public function isAdmin()
 	return $this->user["account"] == ACCOUNT_ADMINISTRATOR or $this->userId == C("esoTalk.rootAdmin");
 }
 
+/**
+ * Return whether or not the current user is an moderator.
+ *
+ * @param int|array $channel Check if the user is a moderator of the channels (array)
+ *                           specified in the array. Or from the channel (int).
+ *                           (Optional Param)
+ * @return bool
+ */
+public function isModerator($channel=false)
+{
+    if ($this->isAdmin()) return true;
+    
+    $sql = ET::memberModel()->prepareSQL();
+    
+    if (is_int($channel))
+        $channel = array($channel);
+        
+    $sql->select("BIT_OR(p.moderate)", "canModerate");
+    if (is_array($channel)) {
+        $sql->from("channel_group p", "p.channelId IN (:channel) AND p.groupId IN (:groupIds)", "left")
+            ->bind(":channel", $channel);
+    } else {
+        $sql->from("channel_group p", "p.groupId IN (:groupIds)", "left");
+    }
+    
+    $sql->where(array('m.memberId' => $this->userId));
+    $sql->bind(":groupIds", $this->getGroupIds());
+    
+    $data = ET::memberModel()->getWithSQL($sql, false);
+    return (bool)$data[0]['canModerate'];
+}
 
 /**
  * Return whether or not the current user is suspended.
@@ -403,7 +434,6 @@ public function isSuspended()
 {
 	return $this->user["account"] == ACCOUNT_SUSPENDED;
 }
-
 
 /**
  * Return whether or not the current user is flooding.

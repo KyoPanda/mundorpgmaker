@@ -1047,7 +1047,7 @@ wrapText: function(textarea, tagStart, tagEnd, selectArgument, defaultArgumentVa
 },
 
 // Toggle preview on an editing area.
-togglePreview: function(id, preview, bodyOnly) {
+togglePreview: function(id, preview) {
 
 	// If the preview box is checked...
 	if (preview) {
@@ -1061,8 +1061,7 @@ togglePreview: function(id, preview, bodyOnly) {
 			url: "conversation/preview.ajax",
 			type: "post",
 			data: {
-                            content: $("#" + id + " textarea").val(),
-                            bodyOnly: bodyOnly ? true : false
+                            content: $("#" + id + " textarea").val()
                         },
 			success: function(data) {
                                 // Keep the minimum height.

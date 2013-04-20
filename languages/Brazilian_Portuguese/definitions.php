@@ -13,7 +13,10 @@ ET::$languageInfo["Brazilian_Portuguese"] = array(
 // Define o charset que o pacote de idiomas usa
 $definitions["charset"] = "utf-8";
 
-$definitions["date.full"] = "d/m/Y, G:i:s"; // veja http://au.php.net/manual/en/function.date.php para mais detalhes
+$definitions["date.full"] = "d/m/Y, H:i:s"; // veja http://au.php.net/manual/en/function.date.php para mais detalhes
+
+$definitions["Date"] = 'Data';
+$definitions["Time"] = 'Hora';
 
 $definitions["%d day ago"] = "ontem";
 $definitions["%d days ago"] = "há %d dias";
@@ -266,6 +269,44 @@ $definitions["Preview"] = "Pré-visualização";
 $definitions["Previous"] = "Anterior";
 
 $definitions["quote"] = "citação";
+
+$definitions["Report"] = "Reportar";
+$definitions["Reports"] = "Denúncias";
+$definitions["Reason"] = "Razão";
+$definitions["Post Content (click to show/hide)"] = "Conteúdo do post (clique para mostrar/esconder)";
+$definitions["in"] = "em";
+$definitions["Send Report"] = "Enviar Denúncia";
+$definitions["Report Sent"] = "Denúncia enviada";
+$definitions["Are you sure you want to close the report?"] = "Você tem certeza que deseja fechar a denúncia?";
+$definitions["Are you sure you want to open the report?"] = "Você tem certeza que deseja abrir a denúncia?";
+$definitions["No reports here"] = "Sem denúncias aqui";
+$definitions["Open Reports"] = "Denúncias abertas";
+$definitions["Closed Reports"] = "Denúncias fechadas";
+$definitions["Open"] = "Abrir";
+$definitions["Close"] = "Fechar";
+$definitions["Ignore"] = "Ignorar";
+$definitions["Detail"] = "Detalhes";
+
+$definitions["Moderation"] = "Moderação";
+$definitions["Can warn members"] = "Pode dar avisos à membros";
+$definitions["Given by"] = "Emitido por";
+$definitions["Points"] = "Pontos";
+$definitions["Send warn"] = "Enviar aviso";
+$definitions["Warn Level"] = "Nível de aviso";
+$definitions["Unmoderated"]   = "Não moderado";
+$definitions["Monitored"] = "Monitorado";
+$definitions["Moderated"] = "Moderado";
+$definitions["Muted"] = "Mudo";
+$definitions["Previous Warns"] = "Avisos anteriores";
+$definitions["Warn Sent"] = "Aviso enviado";
+$definitions["This user has not received warns"] = "Este usuário ainda não recebeu avisos";
+$definitions["Monitorated Members"] = "Membros Monitorados";
+$definitions["Last Login"] = "Último Login";
+$definitions["Last Action"] = "Última ação";
+$definitions["There are no monitored members"] = "Não existem membros monitorados";
+$definitions["Approve"] = "Aprovar";
+$definitions["Post successfully approved"] = "Mensagem aprovada com sucesso";
+$definitions["Fail at message approving"] = "Falha ao aprovar mensagem";
 
 $definitions["Read more"] = "Leia mais";
 $definitions["Recent posts"] = "Mensagens recentes";

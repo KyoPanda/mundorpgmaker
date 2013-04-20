@@ -130,6 +130,8 @@ ETFactory::register("channelModel", "ETChannelModel", PATH_MODELS."/ETChannelMod
 ETFactory::register("groupModel", "ETGroupModel", PATH_MODELS."/ETGroupModel.class.php");
 ETFactory::register("activityModel", "ETActivityModel", PATH_MODELS."/ETActivityModel.class.php");
 ETFactory::register("upgradeModel", "ETUpgradeModel", PATH_MODELS."/ETUpgradeModel.class.php");
+ETFactory::register("reportModel", "ETReportModel", PATH_MODELS."/ETReportModel.class.php");
+ETFactory::register("warnModel", "ETWarnModel", PATH_MODELS."/ETWarnModel.class.php");
 
 // If esoTalk hasn't been installed, register the install controller and set it as the default route.
 if (!C("esoTalk.installed")) {
@@ -153,9 +155,11 @@ else {
 	ETFactory::registerController("members", "ETMembersController", PATH_CONTROLLERS."/ETMembersController.class.php");
 	ETFactory::registerController("feed", "ETFeedController", PATH_CONTROLLERS."/ETFeedController.class.php");
 	ETFactory::registerController("admin", "ETAdminController", PATH_CONTROLLERS."/ETAdminController.class.php");
-
+        ETFactory::registerController("moderation", "ETModerationController", PATH_CONTROLLERS.'/ETModerationController.class.php');
+        
 	ETFactory::registerAdminController("dashboard", "ETDashboardAdminController", PATH_CONTROLLERS."/admin/ETDashboardAdminController.class.php");
 	ETFactory::registerAdminController("settings", "ETSettingsAdminController", PATH_CONTROLLERS."/admin/ETSettingsAdminController.class.php");
+        ETFactory::registerAdminController("moderation", "ETModerationAdminController", PATH_CONTROLLERS."/admin/ETModerationAdminController.class.php");
 	ETFactory::registerAdminController("appearance", "ETAppearanceAdminController", PATH_CONTROLLERS."/admin/ETAppearanceAdminController.class.php");
 	ETFactory::registerAdminController("channels", "ETChannelsAdminController", PATH_CONTROLLERS."/admin/ETChannelsAdminController.class.php");
 	ETFactory::registerAdminController("plugins", "ETPluginsAdminController", PATH_CONTROLLERS."/admin/ETPluginsAdminController.class.php");

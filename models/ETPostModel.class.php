@@ -196,6 +196,9 @@ public function create($conversationId, $memberId, $content, $title = "")
 		"content" => $content,
 		"title" => $title
 	);
+        
+        if (ET::memberModel()->getState($memberId) == 1)
+            $data['approved'] = 0;
 
 	$id = parent::create($data);
 
@@ -295,6 +298,22 @@ public function restorePost(&$post)
 	return true;
 }
 
+/**
+ * Approves an post
+ * 
+ * @param int $postId Post Id
+ * @return bool Success or not
+ */
+public function approve($postId){
+    return ET::SQL()
+            ->update('post')
+            ->set(array('approved' => 1))
+            ->where('postId=:postId')
+            ->bind(':postId', $postId)
+            ->limit(1)
+            ->exec()
+            ->result();
+}
 
 /**
  * Validate a post's content.

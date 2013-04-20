@@ -4,4 +4,4 @@ Disallow: /search/
 Disallow: /members/
 Disallow: /user/
 Disallow: /conversation/start/
-Sitemap: http://localhost/esotalk/sitemap.php
+Sitemap: http://localhost:8887/esotalk/index.php/install/sitemap.php

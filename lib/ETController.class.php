@@ -278,6 +278,9 @@ public function init()
 
 			$this->addToMenu("user", "settings", "<a href='".URL("settings")."' class='link-settings'>".T("Settings")."</a>");
 
+                        if (ET::$session->isModerator())
+                            $this->addToMenu("user", "moderation", "<a href='" . URL("moderation") . "'>" . T("Moderation") . "</a>");
+                        
 			if (ET::$session->isAdmin())
 				$this->addToMenu("user", "administration", "<a href='".URL("admin")."' class='link-administration'>".T("Administration")."</a>");
 
@@ -296,7 +299,8 @@ public function init()
 		$stat = "<a href='".URL("members/online")."' class='link-membersOnline'>$stat</a>";
 		$this->addToMenu("statistics", "statistic-online", $stat);
 
-		$this->addToMenu("meta", "copyright", "<a href='http://esotalk.com/'>Powered by esoTalk".(ET::$session->isAdmin() ? " ".ESOTALK_VERSION : "")."</a>");
+                $this->addToMenu("meta", "theme", "<a href='http://themoholics.com/'>Tema Breath 2012 &copy; por Themoholics</a>");
+		$this->addToMenu("meta", "copyright", "<a href='http://esotalk.com/'>Turbinado por esoTalk".(ET::$session->isAdmin() ? " ".ESOTALK_VERSION : "")."</a>");
 
 		// Set up some default JavaScript files and language definitions.
 		$this->addJSFile("js/lib/jquery.js", true);

@@ -30,7 +30,8 @@ public function init()
 	$this->menu = ETFactory::make("menu");
 
 	$this->defaultMenu->add("dashboard", "<a href='".URL("admin/dashboard")."'>".T("Dashboard")."</a>");
-	$this->defaultMenu->add("settings", "<a href='".URL("admin/settings")."'>".T("Forum Settings")."</a>");
+        $this->defaultMenu->add("settings", "<a href='".URL("admin/settings")."'>".T("Forum Settings")."</a>");
+        $this->defaultMenu->add("moderation", "<a href='".URL("admin/moderation")."'>".T("Moderation")."</a>");
 	$this->defaultMenu->add("appearance", "<a href='".URL("admin/appearance")."'>".T("Appearance")."</a>");
 	$this->defaultMenu->add("channels", "<a href='".URL("admin/channels")."'>".T("Channels")."</a>");
 	$this->defaultMenu->add("plugins", "<a href='".URL("admin/plugins")."'>".T("Plugins")."</a>");

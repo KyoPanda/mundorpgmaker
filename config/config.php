@@ -7,14 +7,14 @@ $config["esoTalk.database.password"] = '';
 $config["esoTalk.database.dbName"] = 'esotalk';
 $config["esoTalk.database.prefix"] = 'et_';
 $config["esoTalk.forumTitle"] = 'Mundo RPG Maker';
-$config["esoTalk.baseURL"] = 'http://localhost/esotalk/';
-$config["esoTalk.emailFrom"] = 'do_not_reply@localhost';
+$config["esoTalk.baseURL"] = 'http://localhost:8887/esotalk/index.php/install/';
+$config["esoTalk.emailFrom"] = 'do_not_reply@localhost:8887';
 $config["esoTalk.cookie.name"] = 'Mundo_RPG_Maker';
 $config["esoTalk.urls.friendly"] = true;
 $config["esoTalk.urls.rewrite"] = true;
 $config["BBCode.version"] = '1.0.0g2';
 $config["ReportBug.version"] = '1.0.0g2';
-$config["esoTalk.admin.lastUpdateCheckTime"] = 1359820748;
+$config["esoTalk.admin.lastUpdateCheckTime"] = 1366480708;
 $config["esoTalk.admin.welcomeShown"] = true;
 $config["esoTalk.language"] = 'Brazilian_Portuguese';
 $config["esoTalk.forumLogo"] = false;
@@ -30,8 +30,8 @@ $config["esoTalk.enabledPlugins"] = array (
 );
 $config["Debug.version"] = '1.0.0g2';
 $config["skin.MRM4Ever.headerColor"] = '#0A6BBD';
-$config["skin.MRM4Ever.bodyColor"] = '#0D7FE7';
-$config["skin.MRM4Ever.bodyImage"] = 'uploads/bg.png';
+$config["skin.MRM4Ever.bodyColor"] = '#FFFFFF';
+$config["skin.MRM4Ever.bodyImage"] = false;
 $config["skin.MRM4Ever.noRepeat"] = false;
 $config["skin.MRM4Ever.menuLabel"] = array (
   0 => 'Portal',
@@ -179,5 +179,5 @@ $config["BBCode.tags"] = array (
   ),
 );
 
-// Last updated by: Gab (127.0.0.1) @ Sun, 03 Feb 2013 00:03:31 +0100
+// Last updated by: Gab (127.0.0.1) @ Sat, 20 Apr 2013 19:58:28 +0200
 ?>

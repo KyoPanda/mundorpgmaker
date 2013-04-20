@@ -1,21 +1,59 @@
-/*
-Proto Skin Styles
-This stylesheet contains styles that define Proto-specific fonts, sizes, and colors, and the layout of the
-wrapper (header + footer). Interface-specific styles are included in skins/base/base.css and can be overridden
-here if necessary.
-*/
-
+/* Clearfix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
 
 /* Global */
-body {font-size:13px; margin:0; overflow-y:scroll; background:#f4f4f4}
-body, input, textarea, select {font-family:calibri,helvetica,arial,sans-serif !important}
-input, textarea, select {font-size:100%}
+body {
+    font-size:13px; 
+    margin:0; 
+    overflow-y:scroll; 
+    background: #f5f5f5 url(background.png);
+}
 
+body, input, textarea, select {
+    font-family: calibri,helvetica,arial,sans-serif !important
+}
+
+input, textarea, select {
+    font-size:100%
+}
+
+.wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
 
 /* Links */
-a {text-decoration:none; color:#1260ee}
-a:hover {text-decoration:underline}
-a:active {color:#1a3e6d}
+a {
+    text-decoration:none; 
+    color:#1260ee
+}
+
+a:hover {
+    text-decoration:underline
+}
+
+a:active {
+    color:#1a3e6d
+}
 
 
 /* Inline styles */
@@ -26,61 +64,260 @@ small {font-size:85%}
 h2 {font-size:160%; font-weight:normal}
 h3 {font-size:115%; font-weight:bold}
 p, ul, pre {line-height:1.5em}
-.bodyHeader h1 {line-height:1.5em; font-size:140%; font-weight:bold}
+
+
+
+/* Header */
+#hdr {
+    background: #00a0c6; 
+    border-top: #26201b solid 7px;
+    border-bottom: #f5f5f5 solid 1px;
+    padding: 1px 0 8px 0;
+    width: 100%;
+    text-align: center;
+}
+
+#hdr-content {
+    margin: 5px 0 5px 0;
+    padding: 0 20px;
+}
+
+#hdr-content, #ftr-content {
+    max-width: 960px
+}
+
+#navigationMenu {
+    float: right;
+    margin-top: 10px;
+}
+
+#navigationMenu li {
+    padding: 1em;
+    -o-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#navigationMenu li.selected {
+    background: #0090b2; 
+}
+
+#navigationMenu li:hover {
+    background: #26201b;
+}
+
+#navigationMenu li a {
+    color: #DDD;
+    text-decoration: none;
+    -o-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#navigationMenu li a:hover {
+    color: #FFF;
+}
+
+/* Footer */
+#ftr {
+    padding-top: 20px;
+    font-size:90%; 
+}
+
+#ftr-gotop {
+    background: url(bg_gotop.png) repeat-x;
+    height: 54px;
+    border-bottom: #1c1917 solid 17px;
+}
+
+#ftr-gotop a#goTop {
+    display: block;
+    width: 39px;
+    height: 39px;
+    margin: 0 auto;
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    background: url(i_arrow_top.png) no-repeat 100% 0%;
+    background-color: #00A0C6;
+    cursor: pointer;
+    
+    border-radius: 50px;
+    
+    -o-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#ftr-gotop a#goTop:hover {
+    background-color: #211e1c
+}
+
+#ftr-body {
+    border-top: #2b2827 solid 1px;
+    background: #211e1c;
+    color: #585858;
+    padding: 10px;
+    text-align: center;
+}
+
+#ftr-body .columns {
+    width: 960px;
+    margin: 0 auto;
+    list-style: none;
+    text-align: justify;
+    padding: 0;
+}
+
+#ftr-body .columns > li {
+    width: 220px;
+    margin-left: 20px;
+    float: left;
+}
+
+#ftr-body .columns > li:first-child {
+    margin-left: 0;
+}
+
+#ftr-bottom {
+    background: #191715;
+    padding: 5px 0 5px 0;
+    width: 100%;
+    height: 40px;
+}
+
+#ftr-bottom .menu {
+    float: left;
+    padding-top: 1em;
+}
+
+#ftr-bottom .menu li:after {
+    content: " | ";
+    color: #585858;
+}
+
+#ftr-bottom .menu li:first-child:after, #ftr-bottom .menu li:last-child:after {
+    content: "";
+}
+
+#ftr-bottom .menu li a {
+    color: #6E6D6B;
+}
+
+#ftr-bottom .menu li a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+
+#ftr-bottom .social {
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#ftr-bottom .social li {
+    float: left;
+    padding: 1em;
+    
+    -o-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#ftr-bottom .social li:hover {
+    background: #13110F;
+}
+
+#ftr-bottom .social li a {
+    color: #6E6D6B;
+}
+
+#ftr-bottom .social li a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+
+/* Logo */
+#logo {
+	height: 170px;
+        text-align: center;
+} 
+
+/* Body */
+#body {
+    border-top: #ececec solid 6px;
+}
+
+#body-content {
+    margin: 0 auto 50px auto; 
+    min-width:760px; 
+    max-width:960px; 
+    padding: 10px;
+    
+    background: #efefef;
+    
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.075);
+}
 
 
 /* Layout */
-#hdr-content, #logo, #body-content, #ftr-content, #navigationMenu {margin:0 auto; min-width:760px; max-width:950px; padding:0 20px}
-#body-content {background:url(shadow.png) repeat-x}
-#body-content {background-color:#fff}
-#body-content, #navigationMenu {padding-bottom:20px; padding-top:1px; border:solid #ddd}
-#body-content {border-top: none;border-radius:0 0 3px 3px}
-#navigationMenu {border-bottom: none;border-radius:3px 3px 0 0}
-#hdr-content, #ftr-content {max-width:1140px}
+.bodyHeader {
+    width: 940px;
+    margin: 0 auto;
+    border-bottom: none;
+}
+
+.bodyHeader.floating {
+    -webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.05); 
+    -moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.05); 
+    -webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.05); 
+    box-shadow:0 1px 1px rgba(0, 0, 0, 0.05); 
+    background:#fff; 
+    margin-left: -10px; 
+    margin-right:-20px; 
+    padding-left:20px; 
+    padding-right:20px
+}
 
 
 /* Menus (inline lists) */
 .menu {font-size:95%; list-style-type:none; margin-top:0; margin-bottom:0; padding:0;display:inline}
 .menu > li {display:inline-block}
-#navigationMenu {display: block; padding:20px}
 
-/* Header */
-#hdr, #navigationMenu {background:#333 url(header.png) repeat-x bottom;color:#fff;text-shadow:rgba(0, 0, 0, 0.5) 0 -1px}
-#hdr {padding:20px 0 14px}
-#hdr h1 {display:inline; font-size:120%; font-weight:bold; margin:0}
-#hdr h1 img {margin:-20px 0 -14px; display:inline; border:0}
-#hdr a, #navigationMenu a {color:#fff}
 
-#mainMenu {float:right}
-#userMenu {margin-top:-5px !important}
+#mainMenu {
+    float: left;
+    margin-top: 1.5em;
+}
+
+#mainMenu a {
+    color: #DDD;
+    
+    -o-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#mainMenu a:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+/*
 #userMenu .item-user {font-weight:bold}
 #userMenu .item-user .avatar {vertical-align:middle; margin:-5px 8px -5px 0}
-#userMenu.menu > li, #navigationMenu > li {margin-left:18px; text-align:left}
+#userMenu.menu > li {margin-left:18px; text-align:left}
 
 #hdr .button {border:1px solid #333; border-color:rgba(0, 0, 0, 0.5); border-radius:3px; color:#fff; text-shadow:0 -1px rgba(0, 0, 0, 0.5); font-size:100%; padding:7px 10px; -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.08); box-shadow:0 1px 0 rgba(255, 255, 255, 0.08); background:url(hdr-button.png) repeat-x; margin:-5px 0}
 #hdr .button:active {background-position:0 -30px}
+*/
 
-/* If a light header color is chosen, make the header text dark. */
-.lightHdr #hdr, .lightHdr #hdr .button, .lightHdr #navigationMenu {text-shadow:rgba(255, 255, 255, 0.3) 0 1px}
-.lightHdr #hdr .button {border-color:rgba(0, 0, 0, 0.3)}
-.lightHdr #hdr, .lightHdr #hdr a, .lightHdr #navigationMenu a {color:rgba(0, 0, 0, 0.7)}
-.lightHdr #hdr .popupButton {background-color:rgba(0, 0, 0, 0.1); color:rgba(0, 0, 0, 0.3); border-bottom:1px solid rgba(0, 0, 0, 0.1)}
-
-/* Logo */
-#logo {
-	height: 170px;
-} 
-
-/* Footer */
-#ftr {font-size:90%; color:#888; color:rgba(0, 0, 0, 0.5)}
-#ftr-content {padding:20px 10px 35px}
-#ftr li {margin-right:10px}
-#ftr a {color:#444; color:rgba(0, 0, 0, 0.75);}
-#ftr .item-copyright {float:right; margin:0}
-#ftr .item-copyright a {color:#bbb; color:rgba(0, 0, 0, 0.3)}
-
-.darkBody #ftr {color:#ccc; color:rgba(255, 255, 255, 0.7)}
-.darkBody #ftr a {color:#bbb; color:rgba(255, 255, 255, 0.5)}
 
 
 /* Text inputs */

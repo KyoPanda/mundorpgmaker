@@ -44,7 +44,13 @@ public function handler_conversationController_renderBefore($sender)
         $sender->addCSSFile($this->getResource("SyntaxHighlighter/shCore.css"));
         $sender->addCSSFile($this->getResource("SyntaxHighlighter/shCoreEclipse.css"));
 }
+
 public function handler_settingsController_renderBefore($sender)
+{
+    return $this->handler_conversationController_renderBefore($sender);
+}
+
+public function handler_reportController_renderBefore($sender)
 {
     return $this->handler_conversationController_renderBefore($sender);
 }

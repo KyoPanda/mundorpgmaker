@@ -17,6 +17,7 @@ $className = "channel-".$conversation["channelId"];
 if ($conversation["starred"]) $className .= " starred";
 if ($conversation["unread"] and ET::$session->user) $className .= " unread";
 if ($conversation["startMemberId"] == ET::$session->user) $className .= " mine";
+if ($conversation["unapproved"]) $className .= " notApproved";
 
 ?>
 <li id='c<?php echo $conversation["conversationId"]; ?>' class='<?php echo $className; ?>'>

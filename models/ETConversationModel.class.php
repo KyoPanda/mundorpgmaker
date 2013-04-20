@@ -170,22 +170,22 @@ public function get($wheres = array())
 	$this->addAllowedPredicate($sql);
 
 	// Fetch the user's reply and moderate permissions for this conversation.
-	if (!ET::$session->isAdmin()) {
-		$sql->select("BIT_OR(p.reply)", "canReply")
-			->select("BIT_OR(p.moderate)", "canModerate")
-			->from("channel_group p", "c.channelId=p.channelId AND p.groupId IN (:groupIds)", "left")
-			->bind(":groupIds", ET::$session->getGroupIds());
+        if (!ET::$session->isAdmin()) {
+                $sql->select((ET::memberModel()->getState((int)ET::$session->userId) == 2) ? '0' : "BIT_OR(p.reply)", 'canReply');
+                $sql->select("BIT_OR(p.moderate)", "canModerate")
+                    ->from("channel_group p", "c.channelId=p.channelId AND p.groupId IN (:groupIds)", "left")
+                    ->bind(":groupIds", ET::$session->getGroupIds());
 	}
 	// If the user is an administrator, they can always reply and moderate.
 	else {
 		$sql->select("1", "canReply")
-			->select("1", "canModerate");
+                    ->select("1", "canModerate");
 	}
 
 	// Execute the query.
 	$result = $sql->exec();
 	if (!$result->numRows()) return false;
-
+        
 	// Get all the details from the result into an array.
 	$conversation = $result->firstRow();
 
@@ -568,7 +568,7 @@ public function create($data, $membersAllowed = array(), $isDraft = false)
 	$data["lastPostTime"] = $time;
 	$data["private"] = !empty($membersAllowed);
 	$data["countPosts"] = $isDraft ? 0 : 1;
-
+        
 	// Insert the conversation into the database.
 	$conversationId = parent::create($data);
 
@@ -672,6 +672,7 @@ public function addReply(&$conversation, $content)
 
 	// If the user had a draft saved in this conversation before adding this reply, erase it now.
 	// Also, if the user has the "star on reply" option checked, star the conversation.
+        
 	$update = array();
 	if ($conversation["draft"]) $update["draft"] = null;
 	if (ET::$session->preference("starOnReply")) $update["starred"] = true;
@@ -1023,6 +1024,92 @@ public function getMemberFromName($name)
 	return array("type" => "member", "id" => $row["memberId"], "name" => $row["username"], "avatarFormat" => $row["avatarFormat"], "groups" => $row["groups"]);
 }
 
+/**
+ * Get conversation owner member Id
+ * 
+ * @param int $conversartionId Conversation Id
+ * @return int Owner Id
+ */
+public function getOwnerId($conversationId){
+    return ET::SQL()
+            ->select('memberId')
+            ->from('post')
+            ->where('conversationId=:conversationId')
+            ->bind(':conversationId', $conversationId)
+            ->limit(1)
+            ->orderBy('time DESC')
+            ->exec()
+            ->result();
+}
+
+/**
+ * Check whether or not the conversation is approved from a moderator
+ * 
+ * @param int $conversationId ConversationId
+ * @return bool Conversation state
+ */
+public function getApproved($conversationId) {
+    return ET::SQL()
+            ->select('approved')
+            ->from('post')
+            ->where('conversationId=:conversationId')
+            ->bind(':conversationId', $conversationId)
+            ->limit(1)
+            ->orderBy('time ASC')
+            ->exec()
+            ->result() == 1;
+}
+
+/**
+ * Check if conversation has an post that needs approvation
+ * 
+ * @param int $conversationId Conversation Id
+ * @return bool Conversation state
+ */
+public function hasUnapprovedPost($conversationId){
+    return ET::SQL()
+            ->select('approved')
+            ->from('post p')
+            ->where('p.conversationId=:conversationId')
+            ->bind(':conversationId', $conversationId)
+            ->orderBy('approved ASC') // Coloca tópicos com approved = 0 no 
+            ->exec()                  // início da lista.
+            ->result() == 0;
+}
+
+/**
+ * Check if member can see conversation page
+ * 
+ * @param int $conversationId Conversation Id
+ * @param bool $retState If true, return an array with topic state (approved or not) plus user visibility
+ * @return bool Whether or not the user can see the conversation
+ */
+public function userCanSee($conversationId, $retState=false) {
+    $channelId = ET::SQL()
+               ->select('channelId')
+               ->from($this->table)
+               ->where('conversationId=:conversationId')
+               ->bind(':conversationId', $conversationId)
+               ->exec()
+               ->result();
+    
+    $isModerator = ET::$session->isModerator($channelId);
+    $topicOwner  = ET::$session->userId == ET::conversationModel()->getOwnerId($conversationId);
+    $firstUnapproved = !ET::conversationModel()->getApproved($conversationId);
+    
+    if ($firstUnapproved){
+        $unapproved = true;
+        $canSee = $isModerator || $topicOwner;
+    } else {
+        $unapproved = $isModerator && ET::conversationModel()->hasUnapprovedPost($conversationId);
+        $canSee = true;
+    }
+        
+    if ($retState)
+        return array('canSee' => $canSee, 'unapproved' => $unapproved);
+    else
+        return $canSee;
+}
 
 /**
  * Add a member to a conversation, i.e. give them permission to view it and make the conversation private.

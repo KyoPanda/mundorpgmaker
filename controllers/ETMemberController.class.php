@@ -134,6 +134,10 @@ protected function profile($member, $pane = "")
 	if ($model->canRename($member))
 	 	$controls->add("rename", "<a href='".URL("member/rename/".$member["memberId"])."' id='renameLink'>".T("Change name")."</a>");
 
+        // Add the warn control
+        if ($model->canWarn($member))
+                $controls->add("warn", "<a href='".URL("moderation/warn/".$member["memberId"])."' id='warnLink'>".T("Send warn")."</a>");
+        
 	// Add the delete control.
 	if ($model->canDelete($member)) {
 		$controls->separator();
@@ -465,7 +469,6 @@ public function rename($memberId = "")
 
 	$this->render("member/rename");
 }
-
 
 /**
  * Show a sheet to delete a member.

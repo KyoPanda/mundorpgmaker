@@ -35,6 +35,7 @@ $group = $data["group"];
 <label><?php echo T("Global permissions"); ?></label>
 <div class='checkboxGroup'>
 <label class='checkbox'><?php echo $form->checkbox("canSuspend"); ?> <?php echo T("Can suspend/unsuspend members"); ?></label>
+<label class='checkbox'><?php echo $form->checkbox("canWarn"); ?> <?php echo T("Can warn members"); ?></label>
 <?php if (!$group): ?><label class='checkbox'><?php echo $form->checkbox("giveModeratePermission"); ?> <?php echo T("Give this group the 'moderate' permission on all existing channels"); ?></label><?php endif; ?>
 </div>
 <small><?php echo T("You can manage channel-specific permissions on the channels page."); ?></small>

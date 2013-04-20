@@ -130,6 +130,7 @@ protected function structure($drop = false)
 		->column("groupId", "int(11) unsigned", false)
 		->column("name", "varchar(31)", "")
 		->column("canSuspend", "tinyint(1)", 0)
+                ->column("canWarn", "tinyint(1)", 0)
 		->key("groupId", "primary")
 		->exec($drop);
 
@@ -205,6 +206,7 @@ protected function structure($drop = false)
 		->column("title", "varchar(63)", false)
 		->column("content", "text", false)
 		->column("attributes", "mediumblob")
+                ->column("approved", "tinyint(1)", 1)
 		->key("postId", "primary")
 		->key("memberId")
 		->key(array("conversationId", "time"))
@@ -228,6 +230,42 @@ protected function structure($drop = false)
 		->column("token", "char(32)", false)
 		->key(array("memberId", "series"), "primary")
 		->exec($drop);
+        
+        // Report Table
+        $structure
+                ->table('report')
+                ->column('reportId', 'int(11) unsigned', false)
+                ->column('memberId', 'int(11) unsigned', false)
+                ->column('postId', 'int(11) unsigned', false)
+                ->column('conversationTitle', 'varchar(63)', false)
+                ->column('postContent', 'text', false)
+                ->key('reportId', 'primary')
+                ->key(array('memberId', 'postId'))
+                ->exec($drop);
+        
+        // Report Comments Table
+        $structure
+                ->table('report_comment')
+                ->column('commentId', 'int(11) unsigned', false)
+                ->column('memberId', 'int(11) unsigned', false)
+                ->column('comment', 'text', false)
+                ->column('time', 'int(11) unsigned')
+                ->key('commentId', 'primary')
+                ->key('memberId')
+                ->exec($drop);
+        
+        // Warn Table
+        $structure
+                ->table('warn')
+                ->column('warnId', 'int(11) unsigned', false)
+                ->column('memberId', 'int(11) unsigned', false)
+                ->column('moderatorId', 'int(11) unsigned', false)
+                ->column('time', 'int(11) unsigned', false)
+                ->column('reason', 'varchar(100)', '')
+                ->column('total', 'tinyint(3)')
+                ->key('warnId', 'primary')
+                ->key('memberId')
+                ->exec($drop);
 }
 
 

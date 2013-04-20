@@ -18,6 +18,9 @@ $definitions["charset"] = "utf-8";
 
 $definitions["date.full"] = "j M Y, g:ia \G\M\TO"; // see http://au.php.net/manual/en/function.date.php for details
 
+$definitions["Date"] = 'Date';
+$definitions["Time"] = 'Time';
+
 $definitions["%d day ago"] = "yesterday";
 $definitions["%d days ago"] = "%d days ago";
 $definitions["%d hour ago"] = "1 hour ago";
@@ -266,6 +269,44 @@ $definitions["Preview"] = "Preview";
 $definitions["Previous"] = "Previous";
 
 $definitions["quote"] = "quote";
+
+$definitions["Report"] = "Report";
+$definitions["Reports"] = "Reports";
+$definitions["Reason"] = "Reason";
+$definitions["Post Content (click to show/hide)"] = "Post Content (click to show/hide)";
+$definitions["in"] = "in";
+$definitions["Send Report"] = "Send Report";
+$definitions["Report Sent"] = "Report Sent";
+$definitions["Are you sure you want to close the report?"] = "Are you sure you want to close the report?";
+$definitions["Are you sure you want to open the report?"] = "Are you sure you want to open the report?";
+$definitions["No reports here"] = "No reports here";
+$definitions["Open Reports"] = "Open Reports";
+$definitions["Closed Reports"] = "Closed Reports";
+$definitions["Open"] = "Open";
+$definitions["Close"] = "Close";
+$definitions["Ignore"] = "Ignore";
+$definitions["Detail"] = "Detail";
+
+$definitions["Moderation"] = "Moderation";
+$definitions["Can warn members"] = "Can warn members";
+$definitions["Given by"] = "Given by";
+$definitions["Points"] = "Points";
+$definitions["Send warn"] = "Send warn";
+$definitions["Warn Level"] = "Warn Level";
+$definitions["Unmoderated"]   = "Unmoderated";
+$definitions["Monitored"] = "Monitored";
+$definitions["Moderated"] = "Moderated";
+$definitions["Muted"] = "Muted";
+$definitions["Previous Warns"] = "Previous Warns";
+$definitions["Warn Sent"] = "Warn Sent";
+$definitions["This user has not received warns"] = "This user has not received warns";
+$definitions["Monitorated Members"] = "Monitored Members";
+$definitions["Last Login"] = "Last Login";
+$definitions["Last Action"] = "Last Action";
+$definitions["There are no monitored members"] = "There are no monitored members";
+$definitions["Approve"] = "Approve";
+$definitions["Post successfully approved"] = "Post successfully";
+$definitions["Fail at message approving"] = "Fail at message approving";
 
 $definitions["Read more"] = "Read more";
 $definitions["Recent posts"] = "Recent posts";
